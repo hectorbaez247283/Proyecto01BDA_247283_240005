@@ -12,30 +12,30 @@ DROP TABLE IF EXISTS Cliente;
 DROP TABLE IF EXISTS Domicilio;
 
 CREATE TABLE Domicilios (
-idDomicilio BIGINT PRIMARY KEY AUTO_INCREMENT,
-calle VARCHAR (100),
-colonia VARCHAR (100),
-numeroExterior VARCHAR (12)
+idDomicilio BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+calle VARCHAR (100) NOT NULL,
+colonia VARCHAR (100) NOT NULL,
+numeroExterior VARCHAR (12) NOT NULL
 );
 
 CREATE TABLE Clientes (
-idCliente BIGINT PRIMARY KEY AUTO_INCREMENT,
-nombre VARCHAR (100),
-apellidoPaterno VARCHAR (100),
-apellidoMaterno VARCHAR (100),
-contraseña VARCHAR (15),
-fechaNacimiento DATE,
-idDomicilio BIGINT,
+idCliente BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+nombre VARCHAR (100) NOT NULL,
+apellidoPaterno VARCHAR (100) NOT NULL,
+apellidoMaterno VARCHAR (100) NOT NULL,
+contraseña VARCHAR (15) NOT NULL,
+fechaNacimiento DATE NOT NULL,
+idDomicilio BIGINT NOT NULL,
 FOREIGN KEY (idDomicilio) REFERENCES Domicilios (idDomicilio)
 );
 
 CREATE TABLE Cuentas (
-idCuenta BIGINT PRIMARY KEY AUTO_INCREMENT,
-numeroCuenta BIGINT,
-fechaApertura DATE,
-saldoPesosMx FLOAT,
-estado VARCHAR(30),
-idCliente BIGINT,
+idCuenta BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+numeroCuenta BIGINT NOT NULL,
+fechaApertura DATE NOT NULL,
+saldoPesosMx FLOAT NOT NULL,
+estado VARCHAR(30) NOT NULL,
+idCliente BIGINT NOT NULL,
 FOREIGN KEY (idCliente) REFERENCES Clientes (idCliente)
 );
 
@@ -48,18 +48,19 @@ FOREIGN KEY (idCuenta) REFERENCES Cuentas (idCuenta)
 );
 
 CREATE TABLE Transferencias (
-idTransaccion BIGINT,
-idCuenta BIGINT,
+idTransaccion BIGINT NOT NULL,
+idCuenta BIGINT NOT NULL,
 FOREIGN KEY (idTransaccion) REFERENCES Transacciones (idTransaccion),
 FOREIGN KEY (idCuenta) REFERENCES Cuentas (idCuenta)
 );
 
 CREATE TABLE Retiro_Sin_Cuenta (
-idTransaccion BIGINT,
-folio BIGINT,
-contraseña VARCHAR (8),
-estado VARCHAR (30),
+idTransaccion BIGINT NOT NULL,
+folio BIGINT NOT NULL,
+contraseña VARCHAR (8) NOT NULL,
+estado VARCHAR (30) NOT NULL,
 FOREIGN KEY (idTransaccion) REFERENCES Transacciones (idTransaccion)
 );
 
 
+select * from clientes;
