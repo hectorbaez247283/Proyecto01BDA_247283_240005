@@ -31,7 +31,7 @@ public class ClienteDAO implements ICliente {
     @Override
     public Cliente agregarCliente(ClienteDTO cliente) throws persistenciaException {
         String sentenciaSQLDomicilio = "INSERT INTO Domicilios (calle, colonia, numeroExterior) VALUES (?, ?, ?)";
-        String sentenciaSQLCliente = "INSERT INTO Clientes (nombre, apellidoPaterno, apellidoMaterno, contraseña, telefono,fechaNacimiento, idDomicilio) VALUES (?, ?, ?, ?, ?, ?)";
+        String sentenciaSQLCliente = "INSERT INTO Clientes (nombre, apellidoPaterno, apellidoMaterno, contraseña, telefono, fechaNacimiento, idDomicilio) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQLDomicilio = conexion.prepareStatement(sentenciaSQLDomicilio, Statement.RETURN_GENERATED_KEYS);  PreparedStatement comandoSQLCliente = conexion.prepareStatement(sentenciaSQLCliente, Statement.RETURN_GENERATED_KEYS)) {
 
