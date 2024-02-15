@@ -5,6 +5,7 @@
 package org.itson.bdavanzadas.bancopersistencia_247283_240005.dto;
 
 import java.util.Date;
+import org.itson.bdavanzadas.bancodominio_247283_240005.Domicilio;
 
 /**
  *
