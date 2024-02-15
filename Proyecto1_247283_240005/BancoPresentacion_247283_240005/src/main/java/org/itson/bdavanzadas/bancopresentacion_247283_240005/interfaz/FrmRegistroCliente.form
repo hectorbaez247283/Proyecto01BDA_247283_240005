@@ -52,10 +52,8 @@
                           <Component id="txtApellidoMaterno" max="32767" attributes="0"/>
                           <Component id="txtFechaNacimiento" max="32767" attributes="0"/>
                           <Component id="txtContraseña" max="32767" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="txtColonia" alignment="0" pref="200" max="32767" attributes="0"/>
-                              <Component id="txtCalle" alignment="0" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="txtColonia" alignment="0" pref="200" max="32767" attributes="0"/>
+                          <Component id="txtCalle" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="bRegistrar" min="-2" max="-2" attributes="0"/>

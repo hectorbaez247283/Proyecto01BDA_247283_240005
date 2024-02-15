@@ -23,7 +23,7 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.dto.ClienteDTO;
  */
 public class FrmRegistroCliente extends javax.swing.JFrame {
 
-    String cadenaConexion = "jdbc:mysql://localhost:3306/banco_247283_240005", usuario = "root", contra = "Avenged21@";
+    String cadenaConexion = "jdbc:mysql://localhost:3306/banco_247283_240005", usuario = "root", contra = "151204";
     IConexion c = new Conexion(cadenaConexion, usuario, contra);
     Cliente cli = new Cliente();
     ClienteDAO cliDAO = new ClienteDAO(c);
