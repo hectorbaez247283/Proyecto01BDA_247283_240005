@@ -13,29 +13,20 @@ import org.itson.bdavanzadas.bancodominio_247283_240005.Domicilio;
  */
 public class ClienteDTO {
 
-    private String nombre, apellidoPaterno, apellidoMaterno;
-    private int edad;
+    private String nombre, apellidoPaterno, apellidoMaterno, contraseña;
     private Date fechaNacimiento;
     private Domicilio domicilio;
 
     public ClienteDTO() {
     }
 
-    public ClienteDTO(String nombre, String apellidoPaterno, String apellidoMaterno, int edad, Date fechaNacimiento, Domicilio domicilio) {
+    public ClienteDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String contraseña, Date fechaNacimiento, Domicilio domicilio) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
-        this.edad = edad;
+        this.contraseña = contraseña;
         this.fechaNacimiento = fechaNacimiento;
         this.domicilio = domicilio;
-    }
-
-    public int getEdad() {
-        return edad;
-    }
-
-    public void setEdad(int edad) {
-        this.edad = edad;
     }
 
     public String getNombre() {
@@ -62,6 +53,14 @@ public class ClienteDTO {
         this.apellidoMaterno = apellidoMaterno;
     }
 
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+
     public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
@@ -70,4 +69,12 @@ public class ClienteDTO {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public Domicilio getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(Domicilio domicilio) {
+        this.domicilio = domicilio;
+    }
+    
 }

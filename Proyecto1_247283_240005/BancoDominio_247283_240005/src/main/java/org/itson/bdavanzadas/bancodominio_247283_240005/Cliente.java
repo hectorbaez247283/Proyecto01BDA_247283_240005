@@ -13,29 +13,28 @@ import java.util.Date;
 public class Cliente {
 
     private int id;
-    private String nombre, apellidoPaterno, apellidoMaterno;
-    private int edad;
+    private String nombre, apellidoPaterno, apellidoMaterno, contraseña;
     private Date fechaNacimiento;
     private Domicilio domicilio;
 
     public Cliente() {
     }
 
-    public Cliente(int id, String nombre, String apellidoPaterno, String apellidoMaterno, int edad, Date fechaNacimiento, Domicilio domicilio) {
+    public Cliente(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String contraseña, Date fechaNacimiento, Domicilio domicilio) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
-        this.edad = edad;
+        this.contraseña = contraseña;
         this.fechaNacimiento = fechaNacimiento;
         this.domicilio = domicilio;
     }
 
-    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, int edad, Date fechaNacimiento, Domicilio domicilio) {
+    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String contraseña, Date fechaNacimiento, Domicilio domicilio) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
-        this.edad = edad;
+        this.contraseña = contraseña;
         this.fechaNacimiento = fechaNacimiento;
         this.domicilio = domicilio;
     }
@@ -46,14 +45,6 @@ public class Cliente {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getEdad() {
-        return edad;
-    }
-
-    public void setEdad(int edad) {
-        this.edad = edad;
     }
 
     public String getNombre() {
@@ -80,6 +71,14 @@ public class Cliente {
         this.apellidoMaterno = apellidoMaterno;
     }
 
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+
     public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
@@ -88,9 +87,17 @@ public class Cliente {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public Domicilio getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(Domicilio domicilio) {
+        this.domicilio = domicilio;
+    }
+
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", edad=" + edad + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", fechaNacimiento=" + fechaNacimiento + '}';
+        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", contrase\u00f1a=" + contraseña + ", fechaNacimiento=" + fechaNacimiento + ", domicilio=" + domicilio + '}';
     }
 
 }
