@@ -21,7 +21,8 @@ public class ClienteDTO {
     public ClienteDTO() {
     }
 
-    public ClienteDTO(String apellidoPaterno, String apellidoMaterno, String contraseña, String telefono, String fechaNacimiento, Domicilio domicilio) {
+    public ClienteDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String contraseña, String telefono, String fechaNacimiento, Domicilio domicilio) {
+        this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.contraseña = contraseña;
