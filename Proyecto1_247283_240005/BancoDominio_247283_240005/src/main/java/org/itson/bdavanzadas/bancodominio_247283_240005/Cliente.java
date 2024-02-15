@@ -16,25 +16,28 @@ public class Cliente {
     private String nombre, apellidoPaterno, apellidoMaterno;
     private int edad;
     private Date fechaNacimiento;
+    private Domicilio domicilio;
 
     public Cliente() {
     }
 
-    public Cliente(int id, String nombre, String apellidoPaterno, String apellidoMaterno, int edad, Date fechaNacimiento) {
+    public Cliente(int id, String nombre, String apellidoPaterno, String apellidoMaterno, int edad, Date fechaNacimiento, Domicilio domicilio) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.edad = edad;
         this.fechaNacimiento = fechaNacimiento;
+        this.domicilio = domicilio;
     }
 
-    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, int edad, Date fechaNacimiento) {
+    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, int edad, Date fechaNacimiento, Domicilio domicilio) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.edad = edad;
         this.fechaNacimiento = fechaNacimiento;
+        this.domicilio = domicilio;
     }
 
     public int getId() {

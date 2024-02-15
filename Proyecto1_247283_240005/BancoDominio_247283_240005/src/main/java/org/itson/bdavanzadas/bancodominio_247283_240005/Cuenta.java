@@ -16,21 +16,24 @@ public class Cuenta {
     private String contraseña;
     private float saldoPesosMx;
     private Date fechaApertura;
+    private Cliente cliente;
 
     public Cuenta() {
     }
 
-    public Cuenta(int numeroCuenta, String contraseña, float saldoPesosMx, Date fechaApertura) {
+    public Cuenta(int numeroCuenta, String contraseña, float saldoPesosMx, Date fechaApertura, Cliente cliente) {
         this.numeroCuenta = numeroCuenta;
         this.contraseña = contraseña;
         this.saldoPesosMx = saldoPesosMx;
         this.fechaApertura = fechaApertura;
+        this.cliente = cliente;
     }
 
-    public Cuenta(String contraseña, float saldoPesosMx, Date fechaApertura) {
+    public Cuenta(String contraseña, float saldoPesosMx, Date fechaApertura, Cliente cliente) {
         this.contraseña = contraseña;
         this.saldoPesosMx = saldoPesosMx;
         this.fechaApertura = fechaApertura;
+        this.cliente = cliente;
     }
 
     public int getNumeroCuenta() {

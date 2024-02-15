@@ -15,19 +15,22 @@ public class Transaccion {
     private int id;
     private float monto;
     private Date fechaRealizada;
+    private Cuenta cuenta;
 
     public Transaccion() {
     }
 
-    public Transaccion(int id, float monto, Date fechaRealizada) {
+    public Transaccion(int id, float monto, Date fechaRealizada, Cuenta cuenta) {
         this.id = id;
         this.monto = monto;
         this.fechaRealizada = fechaRealizada;
+        this.cuenta = cuenta;
     }
 
-    public Transaccion(float monto, Date fechaRealizada) {
+    public Transaccion(float monto, Date fechaRealizada, Cuenta cuenta) {
         this.monto = monto;
         this.fechaRealizada = fechaRealizada;
+        this.cuenta = cuenta;
     }
 
     public int getId() {

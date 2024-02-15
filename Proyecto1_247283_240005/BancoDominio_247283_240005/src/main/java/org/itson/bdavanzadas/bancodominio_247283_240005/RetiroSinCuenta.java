@@ -9,20 +9,18 @@ package org.itson.bdavanzadas.bancodominio_247283_240005;
  * @author lv1821
  */
 public class RetiroSinCuenta {
-   private int folio;
-   private String contraseña;
+
+    private int folio;
+    private String contraseña;
+    private Transaccion transaccion;
 
     public RetiroSinCuenta() {
     }
 
-    public RetiroSinCuenta(int folio, String contraseña) {
+    public RetiroSinCuenta(int folio, String contraseña, Transaccion transaccion) {
         this.folio = folio;
         this.contraseña = contraseña;
+        this.transaccion = transaccion;
     }
 
-    public RetiroSinCuenta(String contraseña) {
-        this.contraseña = contraseña;
-    }
-   
-   
 }

@@ -15,16 +15,18 @@ public class ClienteDTO {
     private String nombre, apellidoPaterno, apellidoMaterno;
     private int edad;
     private Date fechaNacimiento;
+    private Domicilio domicilio;
 
     public ClienteDTO() {
     }
 
-    public ClienteDTO(String nombre, String apellidoPaterno, String apellidoMaterno, int edad, Date fechaNacimiento) {
+    public ClienteDTO(String nombre, String apellidoPaterno, String apellidoMaterno, int edad, Date fechaNacimiento, Domicilio domicilio) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.edad = edad;
         this.fechaNacimiento = fechaNacimiento;
+        this.domicilio = domicilio;
     }
 
     public int getEdad() {
