@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.itson.bdavanzadas.bancodominio_247283_240005.Cliente;
+import org.itson.bdavanzadas.bancodominio_247283_240005.Domicilio;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.IConexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.dto.ClienteDTO;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.persistenciaException;
@@ -21,6 +22,7 @@ public class ClienteDAO implements ICliente {
 
     final IConexion conexion;
     private static final Logger LOG = Logger.getLogger(ClienteDAO.class.getName());
+    private Domicilio domicilio;
 
     public ClienteDAO(IConexion conexion) {
         this.conexion = conexion;
@@ -28,26 +30,43 @@ public class ClienteDAO implements ICliente {
 
     @Override
     public Cliente agregarCliente(ClienteDTO cliente) throws persistenciaException {
-        String sentenciaSQL = "INSERT INTO Cliente (nombre,apellidoPaterno,apellidoMaterno,contraseña, fechaNacimiento"
-                + "idDomicilio) VALUES (?,?,?,?,?,?)";
+        String sentenciaSQLDomicilio = "INSERT INTO Domicilio (calle, colonia, numeroExterior) VALUES (?, ?, ?)";
+        String sentenciaSQLCliente = "INSERT INTO Cliente (nombre, apellidoPaterno, apellidoMaterno, contraseña, fechaNacimiento, idDomicilio) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL,
-                Statement.RETURN_GENERATED_KEYS);) {
+        try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQLDomicilio = conexion.prepareStatement(sentenciaSQLDomicilio, Statement.RETURN_GENERATED_KEYS);  PreparedStatement comandoSQLCliente = conexion.prepareStatement(sentenciaSQLCliente, Statement.RETURN_GENERATED_KEYS)) {
 
-            comandoSQL.setString(1, cliente.getNombre());
-            comandoSQL.setString(2, cliente.getApellidoPaterno());
-            comandoSQL.setString(3, cliente.getApellidoMaterno());
-            comandoSQL.setString(4, cliente.getContraseña());
-            comandoSQL.setDate(5, (Date) cliente.getFechaNacimiento());
-            comandoSQL.setObject(6, cliente.getDomicilio());
-            int resultado = comandoSQL.executeUpdate();
+            comandoSQLDomicilio.setString(1, cliente.getDomicilio().getCalle());
+            comandoSQLDomicilio.setString(2, cliente.getDomicilio().getColonia());
+            comandoSQLDomicilio.setString(3, cliente.getDomicilio().getNumeroExterior());
 
-            LOG.log(Level.SEVERE, "Se han agregado {0}", resultado);
-            ResultSet res = comandoSQL.getGeneratedKeys();
-            res.next();
+            int resultadoDomicilio = comandoSQLDomicilio.executeUpdate();
 
-            Cliente clienteSave = new Cliente(res.getInt(1), cliente.getNombre(), cliente.getApellidoPaterno(), cliente.getApellidoMaterno(), cliente.getContraseña(),
-                    cliente.getFechaNacimiento(), cliente.getDomicilio());
+            if (resultadoDomicilio == 0) {
+                throw new persistenciaException("No se pudo insertar el domicilio");
+            }
+
+            ResultSet resDomicilio = comandoSQLDomicilio.getGeneratedKeys();
+            resDomicilio.next();
+            int idDomicilio = resDomicilio.getInt(1);
+
+            comandoSQLCliente.setString(1, cliente.getNombre());
+            comandoSQLCliente.setString(2, cliente.getApellidoPaterno());
+            comandoSQLCliente.setString(3, cliente.getApellidoMaterno());
+            comandoSQLCliente.setString(4, cliente.getContraseña());
+            comandoSQLCliente.setString(5, cliente.getFechaNacimiento());
+            comandoSQLCliente.setInt(6, idDomicilio);
+
+            int resultadoCliente = comandoSQLCliente.executeUpdate();
+
+            LOG.log(Level.SEVERE, "Se ha agregado {0} cliente", resultadoCliente);
+
+            ResultSet resCliente = comandoSQLCliente.getGeneratedKeys();
+            resCliente.next();
+
+            Cliente clienteSave = new Cliente(resCliente.getInt(1), cliente.getNombre(), cliente.getApellidoPaterno(),
+                    cliente.getApellidoMaterno(), cliente.getContraseña(), cliente.getFechaNacimiento(),
+                    cliente.getDomicilio());
+
             return clienteSave;
 
         } catch (Exception e) {

@@ -4,8 +4,6 @@
  */
 package org.itson.bdavanzadas.bancodominio_247283_240005;
 
-import java.util.Date;
-
 /**
  *
  * @author lv1821
@@ -14,13 +12,13 @@ public class Cliente {
 
     private int id;
     private String nombre, apellidoPaterno, apellidoMaterno, contraseña;
-    private Date fechaNacimiento;
+    private String fechaNacimiento;
     private Domicilio domicilio;
 
     public Cliente() {
     }
 
-    public Cliente(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String contraseña, Date fechaNacimiento, Domicilio domicilio) {
+    public Cliente(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String contraseña, String fechaNacimiento, Domicilio domicilio) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -30,7 +28,7 @@ public class Cliente {
         this.domicilio = domicilio;
     }
 
-    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String contraseña, Date fechaNacimiento, Domicilio domicilio) {
+    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String contraseña, String fechaNacimiento, Domicilio domicilio) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -79,11 +77,11 @@ public class Cliente {
         this.contraseña = contraseña;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
