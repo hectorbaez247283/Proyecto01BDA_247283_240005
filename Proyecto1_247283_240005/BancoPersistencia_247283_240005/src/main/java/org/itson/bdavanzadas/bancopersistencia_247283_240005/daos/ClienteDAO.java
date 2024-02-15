@@ -31,7 +31,7 @@ public class ClienteDAO implements ICliente {
     @Override
     public Cliente agregarCliente(ClienteDTO cliente) throws persistenciaException {
         String sentenciaSQLDomicilio = "INSERT INTO Domicilios (calle, colonia, numeroExterior) VALUES (?, ?, ?)";
-        String sentenciaSQLCliente = "INSERT INTO Clientes (nombre, apellidoPaterno, apellidoMaterno, contraseña, fechaNacimiento, idDomicilio) VALUES (?, ?, ?, ?, ?, ?)";
+        String sentenciaSQLCliente = "INSERT INTO Clientes (nombre, apellidoPaterno, apellidoMaterno, contraseña, telefono,fechaNacimiento, idDomicilio) VALUES (?, ?, ?, ?, ?, ?)";
 
         try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQLDomicilio = conexion.prepareStatement(sentenciaSQLDomicilio, Statement.RETURN_GENERATED_KEYS);  PreparedStatement comandoSQLCliente = conexion.prepareStatement(sentenciaSQLCliente, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -53,8 +53,9 @@ public class ClienteDAO implements ICliente {
             comandoSQLCliente.setString(2, cliente.getApellidoPaterno());
             comandoSQLCliente.setString(3, cliente.getApellidoMaterno());
             comandoSQLCliente.setString(4, cliente.getContraseña());
-            comandoSQLCliente.setString(5, cliente.getFechaNacimiento());
-            comandoSQLCliente.setInt(6, idDomicilio);
+            comandoSQLCliente.setString(5, cliente.getTelefono());
+            comandoSQLCliente.setString(6, cliente.getFechaNacimiento());
+            comandoSQLCliente.setInt(7, idDomicilio);
 
             int resultadoCliente = comandoSQLCliente.executeUpdate();
 
@@ -64,7 +65,7 @@ public class ClienteDAO implements ICliente {
             resCliente.next();
 
             Cliente clienteSave = new Cliente(resCliente.getInt(1), cliente.getNombre(), cliente.getApellidoPaterno(),
-                    cliente.getApellidoMaterno(), cliente.getContraseña(), cliente.getFechaNacimiento(),
+                    cliente.getApellidoMaterno(), cliente.getContraseña(), cliente.getTelefono(),cliente.getFechaNacimiento(),
                     cliente.getDomicilio());
 
             return clienteSave;

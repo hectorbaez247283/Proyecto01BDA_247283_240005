@@ -24,6 +24,7 @@ nombre VARCHAR (100) NOT NULL,
 apellidoPaterno VARCHAR (100) NOT NULL,
 apellidoMaterno VARCHAR (100) NOT NULL,
 contraseña VARCHAR (15) NOT NULL,
+telefono VARCHAR(10) NOT NULL,
 fechaNacimiento DATE NOT NULL,
 idDomicilio BIGINT NOT NULL,
 FOREIGN KEY (idDomicilio) REFERENCES Domicilios (idDomicilio)
