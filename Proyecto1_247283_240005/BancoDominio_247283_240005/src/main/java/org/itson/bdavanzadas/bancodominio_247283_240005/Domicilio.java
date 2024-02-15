@@ -63,7 +63,7 @@ public class Domicilio {
 
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", calle=" + calle + ", colonia=" + colonia + ", numeroExterior=" + numeroExterior + '}';
+        return "Domicilio{" + "id=" + id + ", calle=" + calle + ", colonia=" + colonia + ", numeroExterior=" + numeroExterior + '}';
     }
 
 }

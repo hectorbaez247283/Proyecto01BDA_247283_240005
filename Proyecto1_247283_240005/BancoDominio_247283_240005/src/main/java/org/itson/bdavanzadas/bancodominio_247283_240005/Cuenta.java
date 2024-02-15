@@ -12,28 +12,38 @@ import java.util.Date;
  */
 public class Cuenta {
 
-    private int numeroCuenta;
-    private String contraseña;
-    private float saldoPesosMx;
+    private int id, numeroCuenta;
     private Date fechaApertura;
+    private float saldoPesosMx;
+    private String estado;
     private Cliente cliente;
 
     public Cuenta() {
     }
 
-    public Cuenta(int numeroCuenta, String contraseña, float saldoPesosMx, Date fechaApertura, Cliente cliente) {
+    public Cuenta(int id, int numeroCuenta, Date fechaApertura, float saldoPesosMx, String estado, Cliente cliente) {
+        this.id = id;
         this.numeroCuenta = numeroCuenta;
-        this.contraseña = contraseña;
-        this.saldoPesosMx = saldoPesosMx;
         this.fechaApertura = fechaApertura;
+        this.saldoPesosMx = saldoPesosMx;
+        this.estado = estado;
         this.cliente = cliente;
     }
 
-    public Cuenta(String contraseña, float saldoPesosMx, Date fechaApertura, Cliente cliente) {
-        this.contraseña = contraseña;
-        this.saldoPesosMx = saldoPesosMx;
+    public Cuenta(int numeroCuenta, Date fechaApertura, float saldoPesosMx, String estado, Cliente cliente) {
+        this.numeroCuenta = numeroCuenta;
         this.fechaApertura = fechaApertura;
+        this.saldoPesosMx = saldoPesosMx;
+        this.estado = estado;
         this.cliente = cliente;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getNumeroCuenta() {
@@ -44,12 +54,12 @@ public class Cuenta {
         this.numeroCuenta = numeroCuenta;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public Date getFechaApertura() {
+        return fechaApertura;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setFechaApertura(Date fechaApertura) {
+        this.fechaApertura = fechaApertura;
     }
 
     public float getSaldoPesosMx() {
@@ -60,17 +70,25 @@ public class Cuenta {
         this.saldoPesosMx = saldoPesosMx;
     }
 
-    public Date getFechaApertura() {
-        return fechaApertura;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setFechaApertura(Date fechaApertura) {
-        this.fechaApertura = fechaApertura;
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     @Override
     public String toString() {
-        return "Cuenta{" + "numeroCuenta=" + numeroCuenta + ", contrase\u00f1a=" + contraseña + ", saldoPesosMx=" + saldoPesosMx + ", fechaApertura=" + fechaApertura + '}';
+        return "Cuenta{" + "id=" + id + ", numeroCuenta=" + numeroCuenta + ", fechaApertura=" + fechaApertura + ", saldoPesosMx=" + saldoPesosMx + ", estado=" + estado + ", cliente=" + cliente + '}';
     }
 
 }
