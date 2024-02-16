@@ -173,6 +173,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void btnInciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInciarSesionActionPerformed
         // TODO add your handling code here:
+        FrmInicioSesion f = new FrmInicioSesion();
+        f.setVisible(true);
     }//GEN-LAST:event_btnInciarSesionActionPerformed
 
     private void btnRetirarSnCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetirarSnCuentaActionPerformed

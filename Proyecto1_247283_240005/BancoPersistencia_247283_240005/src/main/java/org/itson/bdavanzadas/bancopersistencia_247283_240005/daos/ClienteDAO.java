@@ -22,7 +22,6 @@ public class ClienteDAO implements ICliente {
 
     final IConexion conexion;
     private static final Logger LOG = Logger.getLogger(ClienteDAO.class.getName());
-    private Domicilio domicilio;
 
     public ClienteDAO(IConexion conexion) {
         this.conexion = conexion;
@@ -65,7 +64,7 @@ public class ClienteDAO implements ICliente {
             resCliente.next();
 
             Cliente clienteSave = new Cliente(resCliente.getInt(1), cliente.getNombre(), cliente.getApellidoPaterno(),
-                    cliente.getApellidoMaterno(), cliente.getContraseña(), cliente.getTelefono(),cliente.getFechaNacimiento(),
+                    cliente.getApellidoMaterno(), cliente.getContraseña(), cliente.getTelefono(), cliente.getFechaNacimiento(),
                     cliente.getDomicilio());
 
             return clienteSave;
@@ -74,6 +73,57 @@ public class ClienteDAO implements ICliente {
             LOG.log(Level.SEVERE, "No se pudo agregar", e);
             throw new persistenciaException("No se pudo agregar el cliente", e);
         }
+    }
+
+    @Override
+    public Cliente inicioSesion(String telefono, String contraseña) throws persistenciaException {
+        String sql = "SELECT * FROM Clientes WHERE telefono = ? AND contraseña = ?";
+
+        try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQL = conexion.prepareStatement(sql)) {
+
+            // Establecer los parámetros en la consulta
+            comandoSQL.setString(1, telefono);
+            comandoSQL.setString(2, contraseña);
+
+            // Ejecutar la consulta
+            try ( ResultSet resultado = comandoSQL.executeQuery()) {
+                if (resultado.next()) {
+                    // Se encontró un cliente con las credenciales proporcionadas
+                    return construirClienteDesdeResultSet(resultado);
+                } else {
+                    // No se encontró un cliente con esas credenciales
+                    return null;
+                }
+            }
+
+        } catch (SQLException e) {
+            // Manejar la excepción adecuadamente
+            throw new persistenciaException("Error al intentar iniciar sesión", e);
+        }
+    }
+
+    private Cliente construirClienteDesdeResultSet(ResultSet resultado) throws SQLException {
+
+        Domicilio d = construirDomicilioDesdeResultSet(resultado);
+        return new Cliente(
+                resultado.getInt("idCliente"),
+                resultado.getString("nombre"),
+                resultado.getString("apellidoPaterno"),
+                resultado.getString("apellidoMaterno"),
+                resultado.getString("contraseña"),
+                resultado.getString("telefono"),
+                resultado.getString("fechaNacimiento"),
+                d
+        );
+    }
+
+    private Domicilio construirDomicilioDesdeResultSet(ResultSet resultado) throws SQLException {
+        return new Domicilio(
+                resultado.getInt("idDomicilio"),
+                resultado.getString("calle"),
+                resultado.getString("colonia"),
+                resultado.getString("numeroExterior")
+        );
     }
 
     @Override

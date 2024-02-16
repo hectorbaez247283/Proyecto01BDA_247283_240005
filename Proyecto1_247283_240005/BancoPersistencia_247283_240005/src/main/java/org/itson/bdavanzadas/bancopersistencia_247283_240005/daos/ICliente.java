@@ -16,6 +16,8 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaExcepti
 public interface ICliente {
     public Cliente agregarCliente (ClienteDTO cliente) throws persistenciaException;
     
+    public Cliente inicioSesion (String telefono, String contraseña) throws persistenciaException;
+    
     public Cliente actualizaCliente (ClienteDTO cliente) throws persistenciaException;
     
     public Cliente eliminarCliente (ClienteDTO cliente) throws persistenciaException;
