@@ -14,13 +14,14 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaExcepti
  * @author lv1821
  */
 public interface ICliente {
-    public Cliente agregarCliente (ClienteDTO cliente) throws persistenciaException;
-    
-    public Cliente inicioSesion (String telefono, String contraseña) throws persistenciaException;
-    
-    public Cliente actualizaCliente (ClienteDTO cliente) throws persistenciaException;
-    
-    public Cliente eliminarCliente (ClienteDTO cliente) throws persistenciaException;
-    
-    public List <Cliente> consultarTodos()throws persistenciaException;
+
+    public Cliente agregarCliente(ClienteDTO cliente) throws persistenciaException;
+
+    public void iniciarSesion(String telefono, String contraseña) throws persistenciaException;
+
+    public Cliente actualizaCliente(ClienteDTO cliente) throws persistenciaException;
+
+    public Cliente eliminarCliente(ClienteDTO cliente) throws persistenciaException;
+
+    public List<Cliente> consultarTodos() throws persistenciaException;
 }

@@ -14,5 +14,6 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaExcepti
  */
 public interface ICuenta {
     
+    public void agregarCuenta (Cuenta cuenta) throws persistenciaException;
     
 }

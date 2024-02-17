@@ -20,6 +20,8 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaExcepti
  */
 public class ClienteDAO implements ICliente {
 
+    private boolean inicioSesionExitoso=false;
+
     final IConexion conexion;
     private static final Logger LOG = Logger.getLogger(ClienteDAO.class.getName());
 
@@ -76,7 +78,7 @@ public class ClienteDAO implements ICliente {
     }
 
     @Override
-    public Cliente inicioSesion(String telefono, String contraseña) throws persistenciaException {
+    public void iniciarSesion(String telefono, String contraseña) throws persistenciaException {
         String sql = "SELECT * FROM Clientes WHERE telefono = ? AND contraseña = ?";
 
         try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQL = conexion.prepareStatement(sql)) {
@@ -89,10 +91,10 @@ public class ClienteDAO implements ICliente {
             try ( ResultSet resultado = comandoSQL.executeQuery()) {
                 if (resultado.next()) {
                     // Se encontró un cliente con las credenciales proporcionadas
-                    return construirClienteDesdeResultSet(resultado);
+                    inicioSesionExitoso = true;
                 } else {
                     // No se encontró un cliente con esas credenciales
-                    return null;
+                    inicioSesionExitoso = false;
                 }
             }
 
@@ -102,28 +104,8 @@ public class ClienteDAO implements ICliente {
         }
     }
 
-    private Cliente construirClienteDesdeResultSet(ResultSet resultado) throws SQLException {
-
-        Domicilio d = construirDomicilioDesdeResultSet(resultado);
-        return new Cliente(
-                resultado.getInt("idCliente"),
-                resultado.getString("nombre"),
-                resultado.getString("apellidoPaterno"),
-                resultado.getString("apellidoMaterno"),
-                resultado.getString("contraseña"),
-                resultado.getString("telefono"),
-                resultado.getString("fechaNacimiento"),
-                d
-        );
-    }
-
-    private Domicilio construirDomicilioDesdeResultSet(ResultSet resultado) throws SQLException {
-        return new Domicilio(
-                resultado.getInt("idDomicilio"),
-                resultado.getString("calle"),
-                resultado.getString("colonia"),
-                resultado.getString("numeroExterior")
-        );
+    public boolean isInicioSesionExitoso() {
+        return inicioSesionExitoso;
     }
 
     @Override
