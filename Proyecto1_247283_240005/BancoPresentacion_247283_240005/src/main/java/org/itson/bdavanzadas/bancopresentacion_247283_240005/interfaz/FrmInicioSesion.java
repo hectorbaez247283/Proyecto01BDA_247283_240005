@@ -117,24 +117,25 @@ public class FrmInicioSesion extends javax.swing.JFrame {
         String telefono = txtTelefono.getText();
         String contraseña = txtContraseña.getText();
 
-        // Llamada al método de inicio de sesión
         try {
-            Cliente clienteAutenticado = cliDAO.inicioSesion(telefono, contraseña);
+            cliDAO.iniciarSesion(telefono, contraseña);
 
-            if (clienteAutenticado != null) {
-
+            if (cliDAO.isInicioSesionExitoso()) {
                 JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");
-
-                // Aquí puedes realizar otras acciones según tus necesidades
+                FrmMenu f = new FrmMenu();
+                f.setVisible(true);
+                
             } else {
-                // El inicio de sesión falló, puedes mostrar un mensaje de error
+                
                 JOptionPane.showMessageDialog(this, "Inicio de sesión fallido. Verifica tus credenciales.");
             }
 
         } catch (persistenciaException e) {
-            // Manejo de excepciones, por ejemplo, mostrar un mensaje de error
+            
             JOptionPane.showMessageDialog(this, "Error al intentar iniciar sesión: " + e.getMessage());
         }
+
+
     }//GEN-LAST:event_bInicioSesionActionPerformed
 
     /**
