@@ -109,11 +109,40 @@ public class ClienteDAO implements ICliente {
     }
 
     @Override
-    public Cliente actualizaCliente(ClienteDTO cliente) throws persistenciaException {
+    public void actualizaCliente(ClienteDTO cliente) throws persistenciaException {
+    String sentenciaSQL = "UPDATE Clientes SET nombre=?, apellidoPaterno=?, apellidoMaterno=?, contraseña=?, telefono=?, fechaNacimiento=?, idDomicilio=? WHERE idCliente=?";
 
-        return null;
+    try (Connection conexion = this.conexion.crearConexion();
+         PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL)) {
 
+        // Establecer los parámetros en la consulta
+        comandoSQL.setString(1, cliente.getNombre());
+        comandoSQL.setString(2, cliente.getApellidoPaterno());
+        comandoSQL.setString(3, cliente.getApellidoMaterno());
+        comandoSQL.setString(4, cliente.getContraseña());
+        comandoSQL.setString(5, cliente.getTelefono());
+        comandoSQL.setString(6, cliente.getFechaNacimiento());
+        
+        // Aquí asumo que puedes obtener los atributos de Domicilio según tu estructura
+        comandoSQL.setString(7, cliente.getDomicilio().getCalle());
+        comandoSQL.setString(8, cliente.getDomicilio().getColonia());
+        comandoSQL.setString(9, cliente.getDomicilio().getNumeroExterior());
+        
+
+        // Ejecutar la consulta
+        int resultado = comandoSQL.executeUpdate();
+
+        // Verificar el resultado de la ejecución
+        if (resultado != 1) {
+            // Manejar el caso en que no se haya actualizado el cliente
+            throw new persistenciaException("No se pudo actualizar el cliente.");
+        }
+
+    } catch (SQLException e) {
+        // Manejar la excepción adecuadamente
+        throw new persistenciaException("Error al intentar actualizar el cliente", e);
     }
+}
 
     @Override
     public Cliente eliminarCliente(ClienteDTO cliente) throws persistenciaException {

@@ -19,7 +19,7 @@ public interface ICliente {
 
     public void iniciarSesion(String telefono, String contraseña) throws persistenciaException;
 
-    public Cliente actualizaCliente(ClienteDTO cliente) throws persistenciaException;
+    public void actualizaCliente(ClienteDTO cliente) throws persistenciaException;
 
     public Cliente eliminarCliente(ClienteDTO cliente) throws persistenciaException;
 

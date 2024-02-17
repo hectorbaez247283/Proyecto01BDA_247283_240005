@@ -31,6 +31,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        bActualizaCliente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -38,17 +39,29 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jLabel2.setText("Saldo disponible: ");
 
+        bActualizaCliente.setText("Actualiza");
+        bActualizaCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bActualizaClienteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(254, 254, 254)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel1)))
+                        .addGap(254, 254, 254)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel1))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(bActualizaCliente)))
                 .addContainerGap(275, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -58,11 +71,17 @@ public class FrmMenu extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(83, 83, 83)
                 .addComponent(jLabel2)
-                .addContainerGap(365, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 245, Short.MAX_VALUE)
+                .addComponent(bActualizaCliente)
+                .addGap(98, 98, 98))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bActualizaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bActualizaClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bActualizaClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -100,6 +119,7 @@ public class FrmMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bActualizaCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
