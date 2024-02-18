@@ -109,7 +109,7 @@ public class ClienteDAO implements ICliente {
     }
 
     @Override
-    public void actualizaCliente(ClienteDTO cliente) throws persistenciaException {
+    public void actualizaCliente(Cliente cliente) throws persistenciaException {
         String sentenciaSQLDomicilio = "UPDATE Domicilios SET calle=?, colonia=?, numeroExterior=? WHERE idDomicilio=?";
         String sentenciaSQLCliente = "UPDATE Clientes SET nombre=?, apellidoPaterno=?, apellidoMaterno=?, telefono=? WHERE idCliente=?";
 
@@ -119,6 +119,7 @@ public class ClienteDAO implements ICliente {
             comandoSQLDomicilio.setString(1, cliente.getDomicilio().getCalle());
             comandoSQLDomicilio.setString(2, cliente.getDomicilio().getColonia());
             comandoSQLDomicilio.setString(3, cliente.getDomicilio().getNumeroExterior());
+            comandoSQLDomicilio.setLong(4, cliente.getDomicilio().getId());
 
             // Ejecutar la consulta del Domicilio
             int resultadoDomicilio = comandoSQLDomicilio.executeUpdate();
@@ -134,6 +135,7 @@ public class ClienteDAO implements ICliente {
             comandoSQLCliente.setString(2, cliente.getApellidoPaterno());
             comandoSQLCliente.setString(3, cliente.getApellidoMaterno());
             comandoSQLCliente.setString(4, cliente.getTelefono());
+            comandoSQLCliente.setInt(5, cliente.getId());
 
             // Ejecutar la consulta del Cliente
             int resultadoCliente = comandoSQLCliente.executeUpdate();
@@ -158,13 +160,16 @@ public class ClienteDAO implements ICliente {
     }
 
     @Override
-    public ClienteDTO buscarCliente(int id) throws persistenciaException {
-        String sentenciaSQL = "SELECT * FROM Clientes WHERE idCliente = ?";
+    public Cliente buscarCliente(int idCliente) throws persistenciaException {
+        String sentenciaSQL = "SELECT c.*, d.calle, d.colonia, d.numeroExterior "
+                + "FROM Clientes c "
+                + "JOIN Domicilios d ON c.idDomicilio = d.idDomicilio "
+                + "WHERE c.idCliente = ?";
 
         try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL)) {
 
             // Establecer el parámetro en la consulta
-            comandoSQL.setInt(1, id);
+            comandoSQL.setInt(1, idCliente);
 
             // Ejecutar la consulta
             try ( ResultSet resultado = comandoSQL.executeQuery()) {
@@ -172,8 +177,8 @@ public class ClienteDAO implements ICliente {
                     // Se encontró un cliente con el ID proporcionado
                     return construirClienteDesdeResultSet(resultado);
                 } else {
-                    // No se encontró un cliente con ese ID
-                    throw new persistenciaException("No se encontró un cliente con el ID proporcionado.");
+                    // No se encontró un cliente con ese ID, puedes lanzar una excepción o devolver null
+                    throw new persistenciaException("Cliente no encontrado");
                 }
             }
 
@@ -181,18 +186,19 @@ public class ClienteDAO implements ICliente {
             // Manejar la excepción adecuadamente
             throw new persistenciaException("Error al intentar buscar el cliente", e);
         }
+
     }
 
 // Método auxiliar para construir un objeto ClienteDTO desde un ResultSet
-    private ClienteDTO construirClienteDesdeResultSet(ResultSet resultado) throws SQLException {
+    private Cliente construirClienteDesdeResultSet(ResultSet resultado) throws SQLException {
         Domicilio domicilio = construirDomicilioDesdeResultSet(resultado);
 
-        return new ClienteDTO(
+        return new Cliente(
+                resultado.getInt("idCliente"),
                 resultado.getString("nombre"),
                 resultado.getString("apellidoPaterno"),
                 resultado.getString("apellidoMaterno"),
                 resultado.getString("telefono"),
-                resultado.getString("fechaNacimiento"),
                 domicilio
         );
     }

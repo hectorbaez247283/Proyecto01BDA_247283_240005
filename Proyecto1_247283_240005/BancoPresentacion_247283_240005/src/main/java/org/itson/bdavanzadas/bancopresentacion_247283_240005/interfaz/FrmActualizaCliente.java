@@ -252,67 +252,60 @@ public class FrmActualizaCliente extends javax.swing.JFrame {
 
     private void bActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bActualizarActionPerformed
         // TODO add your handling code here:
-        String nombre = txtNombre.getText();
-        String apellidoPaterno = txtApellidoPaterno.getText();
-        String apellidoMaterno = txtApellidoMaterno.getText();
-        String telefono = txtTelefono.getText();
-        String calle = txtCalle.getText();
-        String colonia = txtColonia.getText();
-        String numeroExterior = txtNumeroExterior.getText();
-
-        // Crear un objeto ClienteDTO con los datos actualizados
-        ClienteDTO clienteActualizado = new ClienteDTO();
-        clienteActualizado.setNombre(nombre);
-        clienteActualizado.setApellidoPaterno(apellidoPaterno);
-        clienteActualizado.setApellidoMaterno(apellidoMaterno);
-        clienteActualizado.setTelefono(telefono);
-
-        // Crear un objeto Domicilio con los datos actualizados
-        Domicilio domicilioActualizado = new Domicilio();
-        domicilioActualizado.setCalle(calle);
-        domicilioActualizado.setColonia(colonia);
-        domicilioActualizado.setNumeroExterior(numeroExterior);
-
-        // Asignar el Domicilio actualizado al ClienteDTO
-        clienteActualizado.setDomicilio(domicilioActualizado);
-
         try {
-            // Actualizar el cliente en la base de datos
-            cliDAO.actualizaCliente(clienteActualizado);
+            // Obtener los datos del formulario (supongamos que tienes un objeto ClienteDTO llamado cliente)
+            Cliente cliente = new Cliente();
+            cliente.setId(Integer.parseInt(txtBuscar.getText()));
+            cliente.setNombre(txtNombre.getText());
+            cliente.setApellidoPaterno(txtApellidoPaterno.getText());
+            cliente.setApellidoMaterno(txtApellidoMaterno.getText());
+            cliente.setTelefono(txtTelefono.getText());
 
-            // Manejar cualquier lógica adicional o mostrar mensajes de éxito
+            // Obtener los datos del domicilio (supongamos que tienes un objeto DomicilioDTO llamado domicilio)
+            Domicilio domicilio = new Domicilio();
+            domicilio.setId(Integer.parseInt(txtBuscar.getText()));
+            domicilio.setCalle(txtCalle.getText());
+            domicilio.setColonia(txtColonia.getText());
+            domicilio.setNumeroExterior(txtNumeroExterior.getText());
+
+            cliente.setDomicilio(domicilio);
+
+            // Llamar al método para actualizar el cliente
+            cliDAO.actualizaCliente(cliente);
+
             JOptionPane.showMessageDialog(this, "Cliente actualizado exitosamente");
 
-        } catch (persistenciaException e) {
-            // Manejar errores de persistencia
+        } catch (persistenciaException | NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Error al intentar actualizar el cliente: " + e.getMessage());
         }
 
     }//GEN-LAST:event_bActualizarActionPerformed
 
     private void bBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarActionPerformed
-        // TODO add your handling code here:
-        int id = Integer.parseInt(txtBuscar.getText());
         try {
-            // Invocar al método de búsqueda en tu DAO
-            ClienteDTO clienteEncontrado = cliDAO.buscarCliente(id);
+            int idCliente = Integer.parseInt(txtBuscar.getText());
 
+            // Llamada al método buscarCliente del clienteDAO
+            Cliente clienteEncontrado = cliDAO.buscarCliente(idCliente);
+
+            // Mostrar los resultados en los campos correspondientes del formulario
             txtNombre.setText(clienteEncontrado.getNombre());
             txtApellidoPaterno.setText(clienteEncontrado.getApellidoPaterno());
             txtApellidoMaterno.setText(clienteEncontrado.getApellidoMaterno());
             txtTelefono.setText(clienteEncontrado.getTelefono());
 
-            
+            // Obtener el domicilio del cliente
             Domicilio domicilio = clienteEncontrado.getDomicilio();
-            txtCalle.setText(domicilio.getCalle());
-            txtColonia.setText(domicilio.getColonia());
-            txtNumeroExterior.setText(domicilio.getNumeroExterior());
+            if (domicilio != null) {
+                txtCalle.setText(domicilio.getCalle());
+                txtColonia.setText(domicilio.getColonia());
+                txtNumeroExterior.setText(domicilio.getNumeroExterior());
+            }
 
-        } catch (persistenciaException e) {
-            // Manejar la excepción, por ejemplo, mostrar un mensaje de error
-            JOptionPane.showMessageDialog(this, "Error al buscar el cliente: " + e.getMessage());
+        } catch (persistenciaException | NumberFormatException e) {
+            // Manejar la excepción adecuadamente, por ejemplo, mostrar un mensaje de error
+            JOptionPane.showMessageDialog(this, "Error al buscar cliente: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
 
     }//GEN-LAST:event_bBuscarActionPerformed
 

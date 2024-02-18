@@ -19,11 +19,11 @@ public interface ICliente {
 
     public void iniciarSesion(String telefono, String contraseña) throws persistenciaException;
 
-    public void actualizaCliente(ClienteDTO cliente) throws persistenciaException;
+    public void actualizaCliente(Cliente cliente) throws persistenciaException;
 
     public Cliente eliminarCliente(ClienteDTO cliente) throws persistenciaException;
     
-    public ClienteDTO buscarCliente (int id) throws persistenciaException;
+    public Cliente buscarCliente (int id) throws persistenciaException;
 
     public List<Cliente> consultarTodos() throws persistenciaException;
 }
