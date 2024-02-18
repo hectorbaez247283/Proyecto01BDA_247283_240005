@@ -81,6 +81,8 @@ public class FrmMenu extends javax.swing.JFrame {
 
     private void bActualizaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bActualizaClienteActionPerformed
         // TODO add your handling code here:
+        FrmActualizaCliente f = new FrmActualizaCliente();
+        f.setVisible(true);
     }//GEN-LAST:event_bActualizaClienteActionPerformed
 
     /**

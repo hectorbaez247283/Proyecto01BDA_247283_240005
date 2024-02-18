@@ -30,6 +30,17 @@ public class ClienteDTO {
         this.domicilio = domicilio;
     }
 
+    public ClienteDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String fechaNacimiento, Domicilio domicilio) {
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
+        this.domicilio = domicilio;
+    }
+    
+    
+
 
     public String getNombre() {
         return nombre;

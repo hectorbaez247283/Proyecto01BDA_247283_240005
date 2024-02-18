@@ -41,6 +41,17 @@ public class Cliente {
         this.domicilio = domicilio;
     }
 
+    public Cliente(int id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, Domicilio domicilio) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.telefono = telefono;
+        this.domicilio = domicilio;
+    }
+    
+    
+
     public int getId() {
         return id;
     }

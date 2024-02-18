@@ -20,7 +20,7 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaExcepti
  */
 public class ClienteDAO implements ICliente {
 
-    private boolean inicioSesionExitoso=false;
+    private boolean inicioSesionExitoso = false;
 
     final IConexion conexion;
     private static final Logger LOG = Logger.getLogger(ClienteDAO.class.getName());
@@ -110,45 +110,101 @@ public class ClienteDAO implements ICliente {
 
     @Override
     public void actualizaCliente(ClienteDTO cliente) throws persistenciaException {
-    String sentenciaSQL = "UPDATE Clientes SET nombre=?, apellidoPaterno=?, apellidoMaterno=?, contraseña=?, telefono=?, fechaNacimiento=?, idDomicilio=? WHERE idCliente=?";
+        String sentenciaSQLDomicilio = "UPDATE Domicilios SET calle=?, colonia=?, numeroExterior=? WHERE idDomicilio=?";
+        String sentenciaSQLCliente = "UPDATE Clientes SET nombre=?, apellidoPaterno=?, apellidoMaterno=?, telefono=? WHERE idCliente=?";
 
-    try (Connection conexion = this.conexion.crearConexion();
-         PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL)) {
+        try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQLDomicilio = conexion.prepareStatement(sentenciaSQLDomicilio);  PreparedStatement comandoSQLCliente = conexion.prepareStatement(sentenciaSQLCliente)) {
 
-        // Establecer los parámetros en la consulta
-        comandoSQL.setString(1, cliente.getNombre());
-        comandoSQL.setString(2, cliente.getApellidoPaterno());
-        comandoSQL.setString(3, cliente.getApellidoMaterno());
-        comandoSQL.setString(4, cliente.getContraseña());
-        comandoSQL.setString(5, cliente.getTelefono());
-        comandoSQL.setString(6, cliente.getFechaNacimiento());
-        
-        // Aquí asumo que puedes obtener los atributos de Domicilio según tu estructura
-        comandoSQL.setString(7, cliente.getDomicilio().getCalle());
-        comandoSQL.setString(8, cliente.getDomicilio().getColonia());
-        comandoSQL.setString(9, cliente.getDomicilio().getNumeroExterior());
-        
+            // Establecer los parámetros en la consulta del Domicilio
+            comandoSQLDomicilio.setString(1, cliente.getDomicilio().getCalle());
+            comandoSQLDomicilio.setString(2, cliente.getDomicilio().getColonia());
+            comandoSQLDomicilio.setString(3, cliente.getDomicilio().getNumeroExterior());
 
-        // Ejecutar la consulta
-        int resultado = comandoSQL.executeUpdate();
+            // Ejecutar la consulta del Domicilio
+            int resultadoDomicilio = comandoSQLDomicilio.executeUpdate();
 
-        // Verificar el resultado de la ejecución
-        if (resultado != 1) {
-            // Manejar el caso en que no se haya actualizado el cliente
-            throw new persistenciaException("No se pudo actualizar el cliente.");
+            // Verificar el resultado de la ejecución del Domicilio
+            if (resultadoDomicilio != 1) {
+                // Manejar el caso en que no se haya actualizado el Domicilio
+                throw new persistenciaException("No se pudo actualizar el Domicilio.");
+            }
+
+            // Establecer los parámetros en la consulta del Cliente
+            comandoSQLCliente.setString(1, cliente.getNombre());
+            comandoSQLCliente.setString(2, cliente.getApellidoPaterno());
+            comandoSQLCliente.setString(3, cliente.getApellidoMaterno());
+            comandoSQLCliente.setString(4, cliente.getTelefono());
+
+            // Ejecutar la consulta del Cliente
+            int resultadoCliente = comandoSQLCliente.executeUpdate();
+
+            // Verificar el resultado de la ejecución del Cliente
+            if (resultadoCliente != 1) {
+                // Manejar el caso en que no se haya actualizado el Cliente
+                throw new persistenciaException("No se pudo actualizar el Cliente.");
+            }
+
+        } catch (SQLException e) {
+            // Manejar la excepción adecuadamente
+            throw new persistenciaException("Error al intentar actualizar el cliente", e);
         }
-
-    } catch (SQLException e) {
-        // Manejar la excepción adecuadamente
-        throw new persistenciaException("Error al intentar actualizar el cliente", e);
     }
-}
 
     @Override
     public Cliente eliminarCliente(ClienteDTO cliente) throws persistenciaException {
 
         return null;
 
+    }
+
+    @Override
+    public ClienteDTO buscarCliente(int id) throws persistenciaException {
+        String sentenciaSQL = "SELECT * FROM Clientes WHERE idCliente = ?";
+
+        try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL)) {
+
+            // Establecer el parámetro en la consulta
+            comandoSQL.setInt(1, id);
+
+            // Ejecutar la consulta
+            try ( ResultSet resultado = comandoSQL.executeQuery()) {
+                if (resultado.next()) {
+                    // Se encontró un cliente con el ID proporcionado
+                    return construirClienteDesdeResultSet(resultado);
+                } else {
+                    // No se encontró un cliente con ese ID
+                    throw new persistenciaException("No se encontró un cliente con el ID proporcionado.");
+                }
+            }
+
+        } catch (SQLException e) {
+            // Manejar la excepción adecuadamente
+            throw new persistenciaException("Error al intentar buscar el cliente", e);
+        }
+    }
+
+// Método auxiliar para construir un objeto ClienteDTO desde un ResultSet
+    private ClienteDTO construirClienteDesdeResultSet(ResultSet resultado) throws SQLException {
+        Domicilio domicilio = construirDomicilioDesdeResultSet(resultado);
+
+        return new ClienteDTO(
+                resultado.getString("nombre"),
+                resultado.getString("apellidoPaterno"),
+                resultado.getString("apellidoMaterno"),
+                resultado.getString("telefono"),
+                resultado.getString("fechaNacimiento"),
+                domicilio
+        );
+    }
+
+// Método auxiliar para construir un objeto DomicilioDTO desde un ResultSet
+    private Domicilio construirDomicilioDesdeResultSet(ResultSet resultado) throws SQLException {
+        return new Domicilio(
+                resultado.getInt("idDomicilio"),
+                resultado.getString("calle"),
+                resultado.getString("colonia"),
+                resultado.getString("numeroExterior")
+        );
     }
 
     @Override
