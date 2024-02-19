@@ -5,6 +5,8 @@
 package org.itson.bdavanzadas.bancopersistencia_247283_240005.daos;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.Random;
 import java.util.logging.Logger;
 import org.itson.bdavanzadas.bancodominio_247283_240005.Cliente;
 import org.itson.bdavanzadas.bancodominio_247283_240005.Cuenta;
@@ -27,46 +29,53 @@ public class CuentaDAO implements ICuenta {
     }
 
     @Override
-    public void agregarCuenta(Cuenta cuenta) throws persistenciaException {
+    public Cuenta agregarCuenta(CuentaDTO cuentaDTO) throws persistenciaException {
         String sentenciaSQL = "INSERT INTO Cuentas (numeroCuenta, fechaApertura, saldoPesosMx, estado, idCliente) VALUES (?, ?, ?, ?, ?)";
 
         try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS)) {
 
+            int numeroCuentaAleatorio = generarNumeroCuentaAleatorio();
+
+            LocalDate fechaActual = LocalDate.now();
+            String fechaApertura = fechaActual.toString();
+
             // Establecer los parámetros en la consulta
-            comandoSQL.setInt(1, cuenta.getNumeroCuenta());
-            comandoSQL.setDate(2, new java.sql.Date(cuenta.getFechaApertura().getTime()));
-            comandoSQL.setFloat(3, cuenta.getSaldoPesosMx());
-            comandoSQL.setString(4, cuenta.getEstado());
-            comandoSQL.setInt(5, cuenta.getCliente().getId());
+            comandoSQL.setInt(1, numeroCuentaAleatorio);
+            comandoSQL.setString(2, fechaApertura);
+            comandoSQL.setFloat(3, 0);
+            comandoSQL.setString(4, "Activa");
+            comandoSQL.setInt(5, cuentaDTO.getCliente().getId());
 
             // Ejecutar la consulta
             int resultado = comandoSQL.executeUpdate();
 
-            // Verificar el resultado de la ejecución
             if (resultado == 1) {
-                // La cuenta se ha agregado correctamente
 
-                // Obtener el ID generado (si es necesario)
                 try ( ResultSet generatedKeys = comandoSQL.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         int idGenerado = generatedKeys.getInt(1);
-                        cuenta.setId(idGenerado);
+
+                        // Construir y devolver un objeto Cuenta con el ID generado
+                        return new Cuenta(idGenerado, numeroCuentaAleatorio, fechaApertura, 0, "Activa", cuentaDTO.getCliente());
                     } else {
-                        // Manejar el caso en el que no se pudo obtener el ID generado
                         throw new persistenciaException("No se pudo obtener el ID de la cuenta.");
                     }
                 }
 
-                // Puedes agregar lógica adicional aquí, si es necesario
             } else {
-                // Manejar el caso en que no se haya agregado la cuenta
                 throw new persistenciaException("No se pudo agregar la cuenta.");
             }
 
         } catch (SQLException e) {
-            // Manejar la excepción adecuadamente
             throw new persistenciaException("Error al intentar agregar la cuenta", e);
         }
+    }
+
+// Método para generar un número de cuenta aleatorio (puedes ajustar la lógica según tus necesidades)
+    private int generarNumeroCuentaAleatorio() {
+        // Aquí puedes implementar la lógica para generar un número de cuenta aleatorio
+        // Puedes utilizar, por ejemplo, la clase Random o cualquier otra lógica que prefieras
+        return 100000 + new Random().nextInt(900000); // Ejemplo: Números de cuenta de 6 dígitos
     }
 
 }

@@ -49,10 +49,6 @@ public class Cliente {
         this.telefono = telefono;
         this.domicilio = domicilio;
     }
-    
-    
-    
-    
 
     public int getId() {
         return id;

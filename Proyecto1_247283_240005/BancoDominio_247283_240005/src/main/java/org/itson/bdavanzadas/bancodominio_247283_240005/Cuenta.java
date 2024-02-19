@@ -13,7 +13,7 @@ import java.util.Date;
 public class Cuenta {
 
     private int id, numeroCuenta;
-    private Date fechaApertura;
+    private String fechaApertura;
     private float saldoPesosMx;
     private String estado;
     private Cliente cliente;
@@ -21,7 +21,7 @@ public class Cuenta {
     public Cuenta() {
     }
 
-    public Cuenta(int id, int numeroCuenta, Date fechaApertura, float saldoPesosMx, String estado, Cliente cliente) {
+    public Cuenta(int id, int numeroCuenta, String fechaApertura, float saldoPesosMx, String estado, Cliente cliente) {
         this.id = id;
         this.numeroCuenta = numeroCuenta;
         this.fechaApertura = fechaApertura;
@@ -30,7 +30,7 @@ public class Cuenta {
         this.cliente = cliente;
     }
 
-    public Cuenta(int numeroCuenta, Date fechaApertura, float saldoPesosMx, String estado, Cliente cliente) {
+    public Cuenta(int numeroCuenta, String fechaApertura, float saldoPesosMx, String estado, Cliente cliente) {
         this.numeroCuenta = numeroCuenta;
         this.fechaApertura = fechaApertura;
         this.saldoPesosMx = saldoPesosMx;
@@ -54,11 +54,11 @@ public class Cuenta {
         this.numeroCuenta = numeroCuenta;
     }
 
-    public Date getFechaApertura() {
+    public String getFechaApertura() {
         return fechaApertura;
     }
 
-    public void setFechaApertura(Date fechaApertura) {
+    public void setFechaApertura(String fechaApertura) {
         this.fechaApertura = fechaApertura;
     }
 
