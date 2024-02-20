@@ -178,11 +178,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         FrmInicioSesion f = new FrmInicioSesion();
         f.setVisible(true);
-        dispose();
+        this.dispose();
     }//GEN-LAST:event_btnInciarSesionActionPerformed
 
     private void btnRetirarSnCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetirarSnCuentaActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnRetirarSnCuentaActionPerformed
 
     
