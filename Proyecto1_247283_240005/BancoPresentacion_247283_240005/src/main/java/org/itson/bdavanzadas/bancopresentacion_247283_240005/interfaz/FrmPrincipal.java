@@ -182,8 +182,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInciarSesionActionPerformed
 
     private void btnRetirarSnCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetirarSnCuentaActionPerformed
-        // TODO add your handling code here:
-        
+        FrmRetiroSinCuenta retiroSinCuenta = new FrmRetiroSinCuenta();
+        retiroSinCuenta.setVisible(true);
     }//GEN-LAST:event_btnRetirarSnCuentaActionPerformed
 
     

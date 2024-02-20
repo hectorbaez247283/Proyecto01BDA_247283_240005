@@ -327,7 +327,8 @@ public class FrmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTransferirActionPerformed
 
     private void btnGenerarFolioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarFolioActionPerformed
-        // TODO add your handling code here:
+        FrmGenerarFolio frmGenFolio = new FrmGenerarFolio();
+        frmGenFolio.setVisible(true);
     }//GEN-LAST:event_btnGenerarFolioActionPerformed
 
     private void btnHistMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistMovimientosActionPerformed
