@@ -13,7 +13,7 @@ import org.itson.bdavanzadas.bancodominio_247283_240005.Cuenta;
 import org.itson.bdavanzadas.bancodominio_247283_240005.Domicilio;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.IConexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.dto.CuentaDTO;
-import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.persistenciaException;
+import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.PersistenciaException;
 
 /**
  *
@@ -29,7 +29,7 @@ public class CuentaDAO implements ICuenta {
     }
 
     @Override
-    public Cuenta agregarCuenta(CuentaDTO cuentaDTO) throws persistenciaException {
+    public Cuenta agregarCuenta(CuentaDTO cuentaDTO) throws PersistenciaException {
         String sentenciaSQL = "INSERT INTO Cuentas (numeroCuenta, fechaApertura, saldoPesosMx, estado, idCliente) VALUES (?, ?, ?, ?, ?)";
 
         try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS)) {
@@ -58,16 +58,16 @@ public class CuentaDAO implements ICuenta {
                         // Construir y devolver un objeto Cuenta con el ID generado
                         return new Cuenta(idGenerado, numeroCuentaAleatorio, fechaApertura, 0, "Activa", cuentaDTO.getCliente());
                     } else {
-                        throw new persistenciaException("No se pudo obtener el ID de la cuenta.");
+                        throw new PersistenciaException("No se pudo obtener el ID de la cuenta.");
                     }
                 }
 
             } else {
-                throw new persistenciaException("No se pudo agregar la cuenta.");
+                throw new PersistenciaException("No se pudo agregar la cuenta.");
             }
 
         } catch (SQLException e) {
-            throw new persistenciaException("Error al intentar agregar la cuenta", e);
+            throw new PersistenciaException("Error al intentar agregar la cuenta", e);
         }
     }
 

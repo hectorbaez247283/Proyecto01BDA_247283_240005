@@ -6,7 +6,7 @@ package org.itson.bdavanzadas.bancopersistencia_247283_240005.daos;
 
 import org.itson.bdavanzadas.bancodominio_247283_240005.Cuenta;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.dto.CuentaDTO;
-import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.persistenciaException;
+import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.PersistenciaException;
 
 /**
  *
@@ -14,6 +14,6 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaExcepti
  */
 public interface ICuenta {
     
-    public Cuenta agregarCuenta (CuentaDTO cuenta) throws persistenciaException;
+    public Cuenta agregarCuenta (CuentaDTO cuenta) throws PersistenciaException;
     
 }

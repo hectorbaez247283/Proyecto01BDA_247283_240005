@@ -7,7 +7,7 @@ package org.itson.bdavanzadas.bancopersistencia_247283_240005.daos;
 import java.util.List;
 import org.itson.bdavanzadas.bancodominio_247283_240005.Cliente;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.dto.ClienteDTO;
-import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.persistenciaException;
+import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.PersistenciaException;
 
 /**
  *
@@ -15,15 +15,15 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaExcepti
  */
 public interface ICliente {
 
-    public Cliente agregarCliente(ClienteDTO cliente) throws persistenciaException;
+    public Cliente agregarCliente(ClienteDTO cliente) throws PersistenciaException;
 
-    public void iniciarSesion(String telefono, String contraseña) throws persistenciaException;
+    public void iniciarSesion(String telefono, String contraseña) throws PersistenciaException;
 
-    public void actualizaCliente(Cliente cliente) throws persistenciaException;
+    public void actualizaCliente(Cliente cliente) throws PersistenciaException;
 
-    public Cliente eliminarCliente(ClienteDTO cliente) throws persistenciaException;
+    public Cliente eliminarCliente(ClienteDTO cliente) throws PersistenciaException;
     
-    public Cliente buscarCliente (int id) throws persistenciaException;
+    public Cliente buscarCliente (int id) throws PersistenciaException;
 
-    public List<Cliente> consultarTodos() throws persistenciaException;
+    public List<Cliente> consultarTodos() throws PersistenciaException;
 }

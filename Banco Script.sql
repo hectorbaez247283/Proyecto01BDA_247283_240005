@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS Transferencia;
 DROP TABLE IF EXISTS Retiro_Sin_Cuenta;
 DROP TABLE IF EXISTS Transaccion;
 DROP TABLE IF EXISTS Cuenta;
-DROP TABLE IF EXISTS Cliente;
+DROP TABLE IF EXISTS Clientes;
 DROP TABLE IF EXISTS Domicilio;
 
 CREATE TABLE Domicilios (
@@ -22,7 +22,7 @@ CREATE TABLE Clientes (
 idCliente BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 nombre VARCHAR (100) NOT NULL,
 apellidoPaterno VARCHAR (100) NOT NULL,
-apellidoMaterno VARCHAR (100) NOT NULL,
+apellidoMaterno VARCHAR (100),
 contraseña VARCHAR (15) NOT NULL,
 telefono VARCHAR(10) NOT NULL,
 fechaNacimiento DATE NOT NULL,

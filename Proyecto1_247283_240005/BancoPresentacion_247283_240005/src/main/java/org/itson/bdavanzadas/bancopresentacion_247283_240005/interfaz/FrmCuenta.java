@@ -12,7 +12,7 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.IConexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.daos.ClienteDAO;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.daos.CuentaDAO;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.dto.CuentaDTO;
-import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.persistenciaException;
+import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.PersistenciaException;
 
 /**
  *
@@ -123,7 +123,7 @@ public class FrmCuenta extends javax.swing.JFrame {
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "ID de cliente no válido. Ingrese un número válido.");
-        } catch (persistenciaException e) {
+        } catch (PersistenciaException e) {
             JOptionPane.showMessageDialog(this, "Error al intentar agregar la cuenta: " + e.getMessage());
         }
     }//GEN-LAST:event_bAgregarCuentaActionPerformed

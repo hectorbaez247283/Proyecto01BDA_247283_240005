@@ -8,24 +8,24 @@ package org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaExcept
  *
  * @author lv1821
  */
-public class persistenciaException extends Exception {
+public class PersistenciaException extends Exception {
 
-    public persistenciaException() {
+    public PersistenciaException() {
     }
 
-    public persistenciaException(String message) {
+    public PersistenciaException(String message) {
         super(message);
     }
 
-    public persistenciaException(String message, Throwable cause) {
+    public PersistenciaException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public persistenciaException(Throwable cause) {
+    public PersistenciaException(Throwable cause) {
         super(cause);
     }
 
-    public persistenciaException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public PersistenciaException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 

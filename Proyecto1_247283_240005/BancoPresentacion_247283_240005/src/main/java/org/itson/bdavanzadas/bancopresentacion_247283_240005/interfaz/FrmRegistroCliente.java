@@ -20,6 +20,7 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.Conexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.IConexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.daos.ClienteDAO;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.dto.ClienteDTO;
+import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.PersistenciaException;
 
 /**
  *
@@ -27,9 +28,7 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.dto.ClienteDTO;
  */
 public class FrmRegistroCliente extends javax.swing.JFrame {
 
-    String cadenaConexion = "jdbc:mysql://localhost:3306/banco_247283_240005", usuario = "root", contra = "Avenged21@";
-    IConexion c = new Conexion(cadenaConexion, usuario, contra);
-    ClienteDAO cliDAO = new ClienteDAO(c);
+    Control control = new Control();
 
     private static final Logger LOG = Logger.getLogger(FrmRegistroCliente.class.getName());
 
@@ -416,23 +415,18 @@ public class FrmRegistroCliente extends javax.swing.JFrame {
         String nombre = txtNombres.getText();
         String apellidoPaterno = txtApellidoPaterno.getText();
         String apellidoMaterno = txtApellidoMaterno.getText();
-        String fechaNacimiento = formatoFecha(jDateChooser1);
-        String contraseña = txtContraseña.getText();
+        String fechaNacimiento = control.formatoFecha(jDateChooser1);
+        String contrasenia = txtContraseña.getText();
         String calle = txtCalle.getText();
         String telefono = txtTelefono.getText();
         String colonia = txtColonia.getText();
         String numeroExterior = txtNumExterior.getText();
 
-        Domicilio newD = new Domicilio(calle, colonia, numeroExterior);
-
-        ClienteDTO newC = new ClienteDTO(nombre, apellidoPaterno, apellidoMaterno, contraseña, telefono, fechaNacimiento, newD);
-
         try {
-            Cliente cliSave = cliDAO.agregarCliente(newC);
-            LOG.log(Level.INFO, cliSave.toString());
-        } catch (Exception e) {
-            LOG.log(Level.SEVERE, "No se pudo agregar cliente: ", e);
-            JOptionPane.showMessageDialog(null, "No se pudo registrar el cliente: Uno o más datos no son válidos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            control.registrarCliente(this, nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, contrasenia, telefono, calle, colonia, numeroExterior);
+            FrmPrincipal fp = new FrmPrincipal();
+            fp.setVisible(true);
+        } catch (PersistenciaException e) {
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
@@ -470,34 +464,22 @@ public class FrmRegistroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txtApellidoMaternoKeyTyped
 
     private void txtCalleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCalleKeyTyped
-        Control.soloLetras(evt);
+
     }//GEN-LAST:event_txtCalleKeyTyped
 
     private void txtColoniaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColoniaKeyTyped
-        Control.soloLetras(evt);
+
     }//GEN-LAST:event_txtColoniaKeyTyped
 
     private void txtNumExteriorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumExteriorKeyTyped
-        Control.soloNumeros(evt, txtNumExterior.getText().length());
+        Control.soloNumeros(evt);
+        Control.caracteresMaximos(evt, 5, txtNumExterior);
     }//GEN-LAST:event_txtNumExteriorKeyTyped
 
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
-        Control.soloNumeros(evt, txtTelefono.getText().length());
+        Control.soloNumeros(evt);
+        Control.caracteresMaximos(evt, 10, txtTelefono);
     }//GEN-LAST:event_txtTelefonoKeyTyped
-
-    /**
-     * Convierte la fecha seleccionada por un JDateChooser en una cadena con el
-     * formato de fecha "yyyy-MM-dd".
-     *
-     * @param jdc Selector de fecha a utilizar.
-     * @return Fecha formateada específica.
-     */
-    private String formatoFecha(JDateChooser jdc) {
-        Date fechaSel = jdc.getDate();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String fechaFormateada = sdf.format(fechaSel);
-        return fechaFormateada;
-    }
 
     /**
      * @param args the command line arguments

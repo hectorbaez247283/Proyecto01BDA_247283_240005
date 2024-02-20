@@ -12,7 +12,7 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.Conexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.IConexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.daos.ClienteDAO;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.dto.ClienteDTO;
-import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.persistenciaException;
+import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.PersistenciaException;
 
 /**
  *
@@ -275,7 +275,7 @@ public class FrmActualizaCliente extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Cliente actualizado exitosamente");
 
-        } catch (persistenciaException | NumberFormatException e) {
+        } catch (PersistenciaException | NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Error al intentar actualizar el cliente: " + e.getMessage());
         }
 
@@ -302,7 +302,7 @@ public class FrmActualizaCliente extends javax.swing.JFrame {
                 txtNumeroExterior.setText(domicilio.getNumeroExterior());
             }
 
-        } catch (persistenciaException | NumberFormatException e) {
+        } catch (PersistenciaException | NumberFormatException e) {
             // Manejar la excepción adecuadamente, por ejemplo, mostrar un mensaje de error
             JOptionPane.showMessageDialog(this, "Error al buscar cliente: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

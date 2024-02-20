@@ -11,7 +11,7 @@ import org.itson.bdavanzadas.bancodominio_247283_240005.Cliente;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.Conexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.IConexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.daos.ClienteDAO;
-import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.persistenciaException;
+import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.PersistenciaException;
 
 /**
  *
@@ -130,7 +130,7 @@ public class FrmInicioSesion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Inicio de sesión fallido. Verifica tus credenciales.");
             }
 
-        } catch (persistenciaException e) {
+        } catch (PersistenciaException e) {
             
             JOptionPane.showMessageDialog(this, "Error al intentar iniciar sesión: " + e.getMessage());
         }

@@ -12,7 +12,7 @@ import org.itson.bdavanzadas.bancodominio_247283_240005.Cliente;
 import org.itson.bdavanzadas.bancodominio_247283_240005.Domicilio;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.IConexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.dto.ClienteDTO;
-import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.persistenciaException;
+import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.PersistenciaException;
 
 /**
  *
@@ -30,7 +30,7 @@ public class ClienteDAO implements ICliente {
     }
 
     @Override
-    public Cliente agregarCliente(ClienteDTO cliente) throws persistenciaException {
+    public Cliente agregarCliente(ClienteDTO cliente) throws PersistenciaException {
         String sentenciaSQLDomicilio = "INSERT INTO Domicilios (calle, colonia, numeroExterior) VALUES (?, ?, ?)";
         String sentenciaSQLCliente = "INSERT INTO Clientes (nombre, apellidoPaterno, apellidoMaterno, contraseña, telefono, fechaNacimiento, idDomicilio) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -43,7 +43,7 @@ public class ClienteDAO implements ICliente {
             int resultadoDomicilio = comandoSQLDomicilio.executeUpdate();
 
             if (resultadoDomicilio == 0) {
-                throw new persistenciaException("No se pudo insertar el domicilio");
+                throw new PersistenciaException("No se pudo insertar el domicilio");
             }
 
             ResultSet resDomicilio = comandoSQLDomicilio.getGeneratedKeys();
@@ -73,12 +73,12 @@ public class ClienteDAO implements ICliente {
 
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "No se pudo agregar", e);
-            throw new persistenciaException("No se pudo agregar el cliente", e);
+            throw new PersistenciaException("No se pudo agregar el cliente", e);
         }
     }
 
     @Override
-    public void iniciarSesion(String telefono, String contraseña) throws persistenciaException {
+    public void iniciarSesion(String telefono, String contraseña) throws PersistenciaException {
         String sql = "SELECT * FROM Clientes WHERE telefono = ? AND contraseña = ?";
 
         try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQL = conexion.prepareStatement(sql)) {
@@ -100,7 +100,7 @@ public class ClienteDAO implements ICliente {
 
         } catch (SQLException e) {
             // Manejar la excepción adecuadamente
-            throw new persistenciaException("Error al intentar iniciar sesión", e);
+            throw new PersistenciaException("Error al intentar iniciar sesión", e);
         }
     }
 
@@ -109,7 +109,7 @@ public class ClienteDAO implements ICliente {
     }
 
     @Override
-    public void actualizaCliente(Cliente cliente) throws persistenciaException {
+    public void actualizaCliente(Cliente cliente) throws PersistenciaException {
         String sentenciaSQLDomicilio = "UPDATE Domicilios SET calle=?, colonia=?, numeroExterior=? WHERE idDomicilio=?";
         String sentenciaSQLCliente = "UPDATE Clientes SET nombre=?, apellidoPaterno=?, apellidoMaterno=?, telefono=? WHERE idCliente=?";
 
@@ -127,7 +127,7 @@ public class ClienteDAO implements ICliente {
             // Verificar el resultado de la ejecución del Domicilio
             if (resultadoDomicilio != 1) {
                 // Manejar el caso en que no se haya actualizado el Domicilio
-                throw new persistenciaException("No se pudo actualizar el Domicilio.");
+                throw new PersistenciaException("No se pudo actualizar el Domicilio.");
             }
 
             // Establecer los parámetros en la consulta del Cliente
@@ -143,24 +143,24 @@ public class ClienteDAO implements ICliente {
             // Verificar el resultado de la ejecución del Cliente
             if (resultadoCliente != 1) {
                 // Manejar el caso en que no se haya actualizado el Cliente
-                throw new persistenciaException("No se pudo actualizar el Cliente.");
+                throw new PersistenciaException("No se pudo actualizar el Cliente.");
             }
 
         } catch (SQLException e) {
             // Manejar la excepción adecuadamente
-            throw new persistenciaException("Error al intentar actualizar el cliente", e);
+            throw new PersistenciaException("Error al intentar actualizar el cliente", e);
         }
     }
 
     @Override
-    public Cliente eliminarCliente(ClienteDTO cliente) throws persistenciaException {
+    public Cliente eliminarCliente(ClienteDTO cliente) throws PersistenciaException {
 
         return null;
 
     }
 
     @Override
-    public Cliente buscarCliente(int idCliente) throws persistenciaException {
+    public Cliente buscarCliente(int idCliente) throws PersistenciaException {
         String sentenciaSQL = "SELECT c.*, d.calle, d.colonia, d.numeroExterior "
                 + "FROM Clientes c "
                 + "JOIN Domicilios d ON c.idDomicilio = d.idDomicilio "
@@ -178,13 +178,13 @@ public class ClienteDAO implements ICliente {
                     return construirClienteDesdeResultSet(resultado);
                 } else {
                     // No se encontró un cliente con ese ID, puedes lanzar una excepción o devolver null
-                    throw new persistenciaException("Cliente no encontrado");
+                    throw new PersistenciaException("Cliente no encontrado");
                 }
             }
 
         } catch (SQLException e) {
             // Manejar la excepción adecuadamente
-            throw new persistenciaException("Error al intentar buscar el cliente", e);
+            throw new PersistenciaException("Error al intentar buscar el cliente", e);
         }
 
     }
@@ -214,7 +214,7 @@ public class ClienteDAO implements ICliente {
     }
 
     @Override
-    public List<Cliente> consultarTodos() throws persistenciaException {
+    public List<Cliente> consultarTodos() throws PersistenciaException {
 
         return null;
 
