@@ -22,7 +22,6 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaExcepti
 public class CuentaDAO implements ICuenta {
 
     final IConexion conexion;
-    private static final Logger LOG = Logger.getLogger(CuentaDAO.class.getName());
 
     public CuentaDAO(IConexion conexion) {
         this.conexion = conexion;

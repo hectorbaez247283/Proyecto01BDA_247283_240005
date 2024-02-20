@@ -182,6 +182,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     private void btnRetirarSnCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetirarSnCuentaActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnRetirarSnCuentaActionPerformed
 
     
