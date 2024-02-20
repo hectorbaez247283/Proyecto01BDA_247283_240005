@@ -17,7 +17,7 @@ public interface ICliente {
 
     public Cliente agregarCliente(ClienteDTO cliente) throws PersistenciaException;
 
-    public Cliente iniciarSesion(String telefono, String contraseña) throws PersistenciaException;
+    public void iniciarSesion(String telefono, String contraseña) throws PersistenciaException;
 
     public void actualizaCliente(Cliente cliente) throws PersistenciaException;
 

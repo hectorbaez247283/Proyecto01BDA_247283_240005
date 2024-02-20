@@ -182,14 +182,14 @@ public class Control {
         return false;
     }
 
-    public Cliente iniciarSesion(String telefono, String contraseña) {
+    public void iniciarSesion(String telefono, String contraseña) {
         try {
             cliDAO.iniciarSesion(telefono, contraseña);
 
             if (cliDAO.isInicioSesionExitoso()) {
                 JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
-                clienteActivo = cliDAO.iniciarSesion(telefono, contraseña);
-                return cliDAO.iniciarSesion(telefono, contraseña);
+                cliDAO.iniciarSesion(telefono, contraseña);
+
             } else {
                 JOptionPane.showMessageDialog(null, "Inicio de sesión fallido. Verifica tus credenciales.");
             }
@@ -197,7 +197,7 @@ public class Control {
         } catch (PersistenciaException e) {
             JOptionPane.showMessageDialog(null, "Error al intentar iniciar sesión: " + e.getMessage());
         }
-        return null;
+
     }
 
     /**
@@ -213,12 +213,12 @@ public class Control {
         // Verificar si el número de cuenta seleccionado no es nulo
         if (numeroCuentaSeleccionado != null) {
             // Realizar la consulta a la base de datos para obtener el saldo
-            try (Connection conexion = DriverManager.getConnection(cadenaConexion, usuario, contra)) {
+            try ( Connection conexion = DriverManager.getConnection(cadenaConexion, usuario, contra)) {
                 String sql = "SELECT saldo FROM Cuentas WHERE numeroCuenta = ?";
-                try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+                try ( PreparedStatement statement = conexion.prepareStatement(sql)) {
                     statement.setString(1, numeroCuentaSeleccionado);
 
-                    try (ResultSet resultSet = statement.executeQuery()) {
+                    try ( ResultSet resultSet = statement.executeQuery()) {
                         if (resultSet.next()) {
                             double saldo = resultSet.getDouble("saldo");
                             label.setText("$" + saldo);
@@ -261,6 +261,7 @@ public class Control {
 
     /**
      * Cancela la cuenta dada por el combobox dado en el parámetro.
+     *
      * @param numCuenta Combobox donde se va a obtener la cuenta a cancelar.
      */
     public void cancelarCuenta(String numCuenta) {
@@ -268,9 +269,9 @@ public class Control {
         // Verificar si el número de cuenta seleccionado no es nulo
         if (numCuenta != null) {
             // Realizar la actualización en la base de datos para cambiar el estado de la cuenta
-            try (Connection conexion = DriverManager.getConnection(cadenaConexion, usuario, contra)) {
+            try ( Connection conexion = DriverManager.getConnection(cadenaConexion, usuario, contra)) {
                 String sql = "UPDATE Cuentas SET estado = 'cancelada' WHERE numeroCuenta = ?";
-                try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+                try ( PreparedStatement statement = conexion.prepareStatement(sql)) {
                     statement.setString(1, numCuenta);
                     int filasAfectadas = statement.executeUpdate();
 

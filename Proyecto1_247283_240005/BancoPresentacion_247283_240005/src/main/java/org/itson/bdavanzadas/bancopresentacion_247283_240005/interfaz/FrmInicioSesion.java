@@ -19,7 +19,7 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaExcepti
  * @author Chris
  */
 public class FrmInicioSesion extends javax.swing.JFrame {
-
+    
     String cadenaConexion = "jdbc:mysql://localhost:3306/banco_247283_240005", usuario = "root", contra = "Avenged21@";
     IConexion c = new Conexion(cadenaConexion, usuario, contra);
     ClienteDAO cliDAO = new ClienteDAO(c);
@@ -27,15 +27,15 @@ public class FrmInicioSesion extends javax.swing.JFrame {
     
     Cliente cliente;
     Control control = new Control();
-
+    
     public Cliente getCliente() {
         return cliente;
     }
-
+    
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    
+
     /**
      * Creates new form FrmInicioSesion
      */
@@ -196,15 +196,28 @@ public class FrmInicioSesion extends javax.swing.JFrame {
         // TODO add your handling code here:
         String telefono = txtTelefono.getText();
         String contraseña = txtContraseña.getText();
-
+        
         try {
-            control.iniciarSesion(telefono, contraseña);
-        } catch (Exception e) {
+            cliDAO.iniciarSesion(telefono, contraseña);
+            
+            if (cliDAO.isInicioSesionExitoso()) {
+                JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");
+                FrmMenu f = new FrmMenu();
+                f.setVisible(true);
+                this.dispose();
+            } else {
+                
+                JOptionPane.showMessageDialog(this, "Inicio de sesión fallido. Verifica tus credenciales.");
+            }
+            
+        } catch (PersistenciaException e) {
+            
+            JOptionPane.showMessageDialog(this, "Error al intentar iniciar sesión: " + e.getMessage());
         }
     }//GEN-LAST:event_bInicioSesionActionPerformed
 
     private void bInicioSesion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInicioSesion1ActionPerformed
-        this.dispose(); 
+        this.dispose();
     }//GEN-LAST:event_bInicioSesion1ActionPerformed
 
     /**
