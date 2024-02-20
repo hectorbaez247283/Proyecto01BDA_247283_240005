@@ -78,30 +78,33 @@ public class ClienteDAO implements ICliente {
     }
 
     @Override
-    public void iniciarSesion(String telefono, String contraseña) throws PersistenciaException {
+    public Cliente iniciarSesion(String telefono, String contraseña) throws PersistenciaException {
         String sql = "SELECT * FROM Clientes WHERE telefono = ? AND contraseña = ?";
+        Cliente clienteIniciadoSesion = null;
 
-        try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQL = conexion.prepareStatement(sql)) {
+        try (Connection conexion = this.conexion.crearConexion(); 
+             PreparedStatement comandoSQL = conexion.prepareStatement(sql)) {
 
             // Establecer los parámetros en la consulta
             comandoSQL.setString(1, telefono);
             comandoSQL.setString(2, contraseña);
 
             // Ejecutar la consulta
-            try ( ResultSet resultado = comandoSQL.executeQuery()) {
+            try (ResultSet resultado = comandoSQL.executeQuery()) {
                 if (resultado.next()) {
                     // Se encontró un cliente con las credenciales proporcionadas
-                    inicioSesionExitoso = true;
-                } else {
-                    // No se encontró un cliente con esas credenciales
-                    inicioSesionExitoso = false;
+                    // Construir el objeto Cliente con la información de la base de datos
+                    clienteIniciadoSesion = construirClienteDesdeResultSet(resultado);
                 }
+                // Si no se encuentra un cliente, el objeto clienteIniciadoSesion permanece como null
             }
 
         } catch (SQLException e) {
             // Manejar la excepción adecuadamente
             throw new PersistenciaException("Error al intentar iniciar sesión", e);
         }
+
+        return clienteIniciadoSesion;
     }
 
     public boolean isInicioSesionExitoso() {

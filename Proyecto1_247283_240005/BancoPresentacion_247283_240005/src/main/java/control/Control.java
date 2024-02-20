@@ -39,13 +39,15 @@ public class Control {
 
     /*
     Atributos de clase.
-    */
+     */
     String cadenaConexion = "jdbc:mysql://localhost:3306/banco_247283_240005", usuario = "root", contra = "151204";
     IConexion c = new Conexion(cadenaConexion, usuario, contra);
     ClienteDAO cliDAO = new ClienteDAO(c);
 
     /**
-     * Asigna una imagen a una etiqueta y la escala al tamaño asignado para la misma.
+     * Asigna una imagen a una etiqueta y la escala al tamaño asignado para la
+     * misma.
+     *
      * @param frame Frame donde se encuentra el label.
      * @param labelName Etiqueta sobre la que se va a trabajar.
      * @param root Raíz donde se encuentra localizada la imagen.
@@ -59,6 +61,7 @@ public class Control {
 
     /**
      * Limita las opciones del campo de texto a solo teclear letras.
+     *
      * @param e Evento de teclas necesario.
      */
     public static void soloLetras(KeyEvent e) {
@@ -72,6 +75,7 @@ public class Control {
 
     /**
      * Limita las opciones del campo de texto a solo teclear números.
+     *
      * @param e Evento de teclas necesario.
      */
     public static void soloNumeros(KeyEvent e) {
@@ -86,6 +90,7 @@ public class Control {
 
     /**
      * Limita los caracteres máximos permitidos en un campo de texto.
+     *
      * @param e Evento de teclas necesario.
      * @param maxLength Longitud máxima del campo.
      * @param txt Campo de texto a trabajar.
@@ -99,8 +104,8 @@ public class Control {
             Toolkit.getDefaultToolkit().beep(); // Emite un sonido de advertencia
         }
     }
-    
-        /**
+
+    /**
      * Convierte la fecha seleccionada por un JDateChooser en una cadena con el
      * formato de fecha "yyyy-MM-dd".
      *
@@ -116,13 +121,32 @@ public class Control {
 
     /**
      * Designa las opciones para el combobox de las cuentas del cliente.
+     *
      * @param combo ComboBox donde se desplegarán las opciones.
      * @param cliente Cliente del cual se buscarán cuentas.
      */
-    public void opcionesComboBox (JComboBox combo, Cliente cliente){
+    public void opcionesComboBox(JComboBox combo, Cliente cliente) {
         combo.setModel(new CuentasComboBoxModel(cliente));
     }
-    
+
+    /**
+     * Registra un cliente en la base de datos, con las características dadas en
+     * el parámetro. Si el cliente no se pudo registrar, se lanza
+     * PersistenciaException.
+     *
+     * @param frame Frame sobre el que se trabaja.
+     * @param nombre Nombre(s) del cliente.
+     * @param apellidoPaterno Apellido paterno del cliente.
+     * @param apellidoMaterno Apellido materno del cliente.
+     * @param fechaNacimiento Fecha de nacimiento del cliente.
+     * @param contrasenia Contraseña de la cuenta del cliente.
+     * @param telefono Teléfono de contacto del cliente.
+     * @param calle Calle de residencia del cliente.
+     * @param colonia Colonia de residencia del cliente.
+     * @param numExterior Número de residencia del cliente.
+     * @return True si el cliente pudo registrarse.
+     * @throws PersistenciaException Si existe un fallo con la capa de persistencia.
+     */
     public boolean registrarCliente(JFrame frame, String nombre, String apellidoPaterno,
             String apellidoMaterno, String fechaNacimiento, String contrasenia,
             String telefono, String calle, String colonia, String numExterior)
@@ -146,4 +170,6 @@ public class Control {
         }
         return false;
     }
+    
+    
 }
