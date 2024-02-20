@@ -4,6 +4,8 @@
  */
 package org.itson.bdavanzadas.bancopresentacion_247283_240005.interfaz;
 
+import control.Control;
+
 /**
  *
  * @author Christopher
@@ -11,11 +13,14 @@ package org.itson.bdavanzadas.bancopresentacion_247283_240005.interfaz;
  */
 public class FrmMenu extends javax.swing.JFrame {
 
+    Control control = new Control();
+    
     /**
      * Creates new form FrmMenu
      */
     public FrmMenu() {
         initComponents();
+        Control.setImageLabel(this, imgLogo, "assets/images/logo.png");
     }
 
     /**
@@ -104,6 +109,11 @@ public class FrmMenu extends javax.swing.JFrame {
         );
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Malgun Gothic", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -173,9 +183,22 @@ public class FrmMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Cierra la sesión activa y cierra la ventana de menú.
+     * @param evt Evento click.
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        Control.limpiarSesion();
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    /**
+     * Despliega la lista de opciones para el combobox con las cuentas de un cliente.
+     * @param evt 
+     */
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        control.opcionesComboBox(jComboBox1, Control.getCliente());
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -192,7 +192,12 @@ public class ClienteDAO implements ICliente {
 
     }
 
-// Método auxiliar para construir un objeto ClienteDTO desde un ResultSet
+    /**
+     * Método auxiliar para construir un objeto ClienteDTO desde un ResultSet.
+     * @param resultado ResultSet del cual se quiere obtener el cliente.
+     * @return Cliente ya convertido.
+     * @throws SQLException Si falla algo en la base de datos.
+     */
     private Cliente construirClienteDesdeResultSet(ResultSet resultado) throws SQLException {
         Domicilio domicilio = construirDomicilioDesdeResultSet(resultado);
 
@@ -206,7 +211,12 @@ public class ClienteDAO implements ICliente {
         );
     }
 
-// Método auxiliar para construir un objeto DomicilioDTO desde un ResultSet
+    /**
+     * Método auxiliar para construir un objeto DomicilioDTO desde un ResultSet.
+     * @param resultado ResultSet del cual se quiere obtener el domicilio.
+     * @return Domicilio ya convertido.
+     * @throws SQLException Si falla algo en la base de datos.
+     */
     private Domicilio construirDomicilioDesdeResultSet(ResultSet resultado) throws SQLException {
         return new Domicilio(
                 resultado.getInt("idDomicilio"),

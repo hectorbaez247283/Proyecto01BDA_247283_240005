@@ -4,12 +4,7 @@ CREATE DATABASE banco_247283_240005;
 USE banco_247283_240005;
 
 
-DROP TABLE IF EXISTS Transferencia;
-DROP TABLE IF EXISTS Retiro_Sin_Cuenta;
-DROP TABLE IF EXISTS Transaccion;
-DROP TABLE IF EXISTS Cuenta;
-DROP TABLE IF EXISTS Clientes;
-DROP TABLE IF EXISTS Domicilio;
+
 
 CREATE TABLE Domicilios (
 idDomicilio BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -63,5 +58,12 @@ estado VARCHAR (30) NOT NULL,
 FOREIGN KEY (idTransaccion) REFERENCES Transacciones (idTransaccion)
 );
 
+
+DROP TABLE IF EXISTS Transferencia;
+DROP TABLE IF EXISTS Retiro_Sin_Cuenta;
+DROP TABLE IF EXISTS Transaccion;
+DROP TABLE IF EXISTS Cuenta;
+DROP TABLE IF EXISTS Clientes;
+DROP TABLE IF EXISTS Domicilio;
 
 select * from clientes;

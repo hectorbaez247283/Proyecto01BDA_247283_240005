@@ -8,6 +8,11 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -26,6 +31,7 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.IConexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.daos.ClienteDAO;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.dto.ClienteDTO;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.PersistenciaException;
+import org.itson.bdavanzadas.bancopresentacion_247283_240005.interfaz.FrmMenu;
 import org.itson.bdavanzadas.bancopresentacion_247283_240005.interfaz.FrmRegistroCliente;
 
 /**
@@ -43,6 +49,8 @@ public class Control {
     String cadenaConexion = "jdbc:mysql://localhost:3306/banco_247283_240005", usuario = "root", contra = "151204";
     IConexion c = new Conexion(cadenaConexion, usuario, contra);
     ClienteDAO cliDAO = new ClienteDAO(c);
+
+    private static Cliente clienteActivo;
 
     /**
      * Asigna una imagen a una etiqueta y la escala al tamaño asignado para la
@@ -145,7 +153,8 @@ public class Control {
      * @param colonia Colonia de residencia del cliente.
      * @param numExterior Número de residencia del cliente.
      * @return True si el cliente pudo registrarse.
-     * @throws PersistenciaException Si existe un fallo con la capa de persistencia.
+     * @throws PersistenciaException Si existe un fallo con la capa de
+     * persistencia.
      */
     public boolean registrarCliente(JFrame frame, String nombre, String apellidoPaterno,
             String apellidoMaterno, String fechaNacimiento, String contrasenia,
@@ -170,6 +179,83 @@ public class Control {
         }
         return false;
     }
-    
-    
+
+    public Cliente iniciarSesion(String telefono, String contraseña) {
+        try {
+            cliDAO.iniciarSesion(telefono, contraseña);
+
+            if (cliDAO.isInicioSesionExitoso()) {
+                JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
+                clienteActivo = cliDAO.iniciarSesion(telefono, contraseña);
+                return cliDAO.iniciarSesion(telefono, contraseña);
+            } else {
+
+                JOptionPane.showMessageDialog(null, "Inicio de sesión fallido. Verifica tus credenciales.");
+            }
+
+        } catch (PersistenciaException e) {
+            JOptionPane.showMessageDialog(null, "Error al intentar iniciar sesión: " + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Muestra el saldo de la cuenta seleccionada en el combobox utilizando el
+     * método setText de la etiqueta dada en el parámetro.
+     *
+     * @param comboBox Combobox donde se seleccionará la cuenta.
+     * @param label Label donde se reflejará el saldo.
+     */
+    public void mostrarSaldo(JComboBox comboBox, JLabel label) {
+        String numeroCuentaSeleccionado = (String) comboBox.getSelectedItem();
+
+        // Verificar si el número de cuenta seleccionado no es nulo
+        if (numeroCuentaSeleccionado != null) {
+            // Realizar la consulta a la base de datos para obtener el saldo
+            try (Connection conexion = DriverManager.getConnection(cadenaConexion, usuario, contra)) {
+                String sql = "SELECT saldo FROM Cuentas WHERE numeroCuenta = ?";
+                try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+                    statement.setString(1, numeroCuentaSeleccionado);
+
+                    try (ResultSet resultSet = statement.executeQuery()) {
+                        if (resultSet.next()) {
+                            double saldo = resultSet.getDouble("saldo");
+                            label.setText("$" + saldo);
+                            // Puedes hacer lo que necesites con el saldo (por ejemplo, mostrarlo en una etiqueta)
+                        } else {
+                            System.out.println("No se encontró información para la cuenta " + numeroCuentaSeleccionado);
+                        }
+                    }
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                // Manejar la excepción según sea necesario
+            }
+        }
+    }
+
+    /**
+     * Obtiene el cliente guardado en el contexto de iniciar sesión.
+     *
+     * @return Cliente con sesión activa.
+     */
+    public static Cliente getCliente() {
+        return clienteActivo;
+    }
+
+    /**
+     * Asigna el cliente con sesión activa con el Cliente dado en el parámetro.
+     *
+     * @param cliente Cliente con sesión activa.
+     */
+    public static void setCliente(Cliente cliente) {
+        Control.clienteActivo = cliente;
+    }
+
+    /**
+     * Limpia la variable que guarda el contexto del cliente activo.
+     */
+    public static void limpiarSesion() {
+        clienteActivo = null;
+    }
 }
