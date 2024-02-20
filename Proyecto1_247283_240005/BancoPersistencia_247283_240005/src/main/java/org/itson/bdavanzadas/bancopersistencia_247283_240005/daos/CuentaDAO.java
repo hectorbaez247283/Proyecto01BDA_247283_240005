@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import org.itson.bdavanzadas.bancodominio_247283_240005.Cliente;
 import org.itson.bdavanzadas.bancodominio_247283_240005.Cuenta;
 import org.itson.bdavanzadas.bancodominio_247283_240005.Domicilio;
+import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.Conexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.IConexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.dto.CuentaDTO;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.PersistenciaException;
@@ -22,6 +23,9 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaExcepti
 public class CuentaDAO implements ICuenta {
 
     final IConexion conexion;
+    String cadenaConexion = "jdbc:mysql://localhost:3306/banco_247283_240005", usuario = "root", contra = "Avenged21@";
+    IConexion c = new Conexion(cadenaConexion, usuario, contra);
+    ClienteDAO cDAO = new ClienteDAO(c);
 
     public CuentaDAO(IConexion conexion) {
         this.conexion = conexion;
@@ -116,4 +120,32 @@ public class CuentaDAO implements ICuenta {
         return 100000 + new Random().nextInt(900000);
     }
 
+    @Override
+    public Cuenta obtenerCuenta(int numeroCuenta) throws PersistenciaException {
+        String sentenciaSQL = "SELECT * FROM Cuentas WHERE numeroCuenta = ?";
+        try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL)) {
+
+            comandoSQL.setInt(1, numeroCuenta);
+
+            try ( ResultSet resultado = comandoSQL.executeQuery()) {
+                if (resultado.next()) {
+                    Cuenta cuenta = new Cuenta();
+                    cuenta.setId(resultado.getInt("idCuenta"));
+                    cuenta.setNumeroCuenta(resultado.getInt("numeroCuenta"));
+                    cuenta.setFechaApertura(resultado.getString("fechaApertura"));
+                    cuenta.setSaldoPesosMx(resultado.getFloat("saldoPesosMx"));
+                    cuenta.setEstado(resultado.getString("estado"));
+
+                    cuenta.setCliente(cDAO.buscarCliente(resultado.getInt("idCliente")));
+                    return cuenta;
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new PersistenciaException("Error al obtener la cuenta por número: " + e.getMessage(), e);
+        }
+
+        // Si no se encuentra ninguna cuenta con ese número, devuelve null
+        return null;
+    }
 }

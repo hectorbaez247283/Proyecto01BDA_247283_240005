@@ -57,10 +57,17 @@ public class Transaccion {
         this.fechaRealizada = fechaRealizada;
     }
 
+    public Cuenta getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
+    }
+
     @Override
     public String toString() {
         return "Transaccion{" + "id=" + id + ", monto=" + monto + ", fechaRealizada=" + fechaRealizada + ", cuenta=" + cuenta + '}';
     }
-
 
 }

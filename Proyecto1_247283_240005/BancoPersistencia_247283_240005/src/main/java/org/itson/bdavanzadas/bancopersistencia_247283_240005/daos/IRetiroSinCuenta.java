@@ -4,6 +4,8 @@
  */
 package org.itson.bdavanzadas.bancopersistencia_247283_240005.daos;
 
+import org.itson.bdavanzadas.bancodominio_247283_240005.RetiroSinCuenta;
+import org.itson.bdavanzadas.bancopersistencia_247283_240005.dto.RetiroSinCuentaDTO;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.PersistenciaException;
 
 /**
@@ -14,4 +16,5 @@ public interface IRetiroSinCuenta {
 
     public void generarFolio(int numeroCuenta) throws PersistenciaException;
 
+    public RetiroSinCuenta realizaRetiro(RetiroSinCuentaDTO rsc) throws PersistenciaException;
 }

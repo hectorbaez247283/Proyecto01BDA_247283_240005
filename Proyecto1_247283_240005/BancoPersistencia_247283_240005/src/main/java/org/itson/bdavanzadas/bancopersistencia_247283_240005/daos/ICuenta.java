@@ -17,8 +17,9 @@ public interface ICuenta {
     public Cuenta agregarCuenta(CuentaDTO cuenta) throws PersistenciaException;
 
     public void agregarSaldo(int numeroCuenta, float saldo) throws PersistenciaException;
-    
-    public float obtenSaldo (int numeroCuenta)throws PersistenciaException;
-    
+
+    public float obtenSaldo(int numeroCuenta) throws PersistenciaException;
+
+    public Cuenta obtenerCuenta(int numeroCuenta) throws PersistenciaException;
 
 }
