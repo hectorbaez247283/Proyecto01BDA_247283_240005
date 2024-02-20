@@ -10,18 +10,20 @@ package org.itson.bdavanzadas.bancodominio_247283_240005;
  */
 public class Transferencia {
 
+    //Atributos de la clase
     Transaccion transaccion;
-    Cuenta cuentaOrig, cuentaDes;
 
+    // Constructor por defecto
     public Transferencia() {
     }
 
+    // Constructor parametrizado con todos los atributos
     public Transferencia(Transaccion transaccion, Cuenta cuentaOrig, Cuenta cuentaDes) {
         this.transaccion = transaccion;
-        this.cuentaOrig = cuentaOrig;
-        this.cuentaDes = cuentaDes;
+
     }
 
+    // Métodos getter y setter para transaccion
     public Transaccion getTransaccion() {
         return transaccion;
     }
@@ -30,25 +32,10 @@ public class Transferencia {
         this.transaccion = transaccion;
     }
 
-    public Cuenta getCuentaOrig() {
-        return cuentaOrig;
-    }
-
-    public void setCuentaOrig(Cuenta cuentaOrig) {
-        this.cuentaOrig = cuentaOrig;
-    }
-
-    public Cuenta getCuentaDes() {
-        return cuentaDes;
-    }
-
-    public void setCuentaDes(Cuenta cuentaDes) {
-        this.cuentaDes = cuentaDes;
-    }
-
+    // Método toString para representar el objeto como una cadena
     @Override
     public String toString() {
-        return "Transferencia{" + "transaccion=" + transaccion + ", cuentaOrig=" + cuentaOrig + ", cuentaDes=" + cuentaDes + '}';
+        return "Transferencia{" + "transaccion=" + transaccion + '}';
     }
 
 }

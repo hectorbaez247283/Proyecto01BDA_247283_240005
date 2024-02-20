@@ -8,11 +8,13 @@ import java.util.Objects;
 
 /**
  * Clase que maneja los datos de cliente
+ *
  * @author Christopher
  * @author Francisco
  */
 public class Cliente {
 
+    //Atributos de la clase
     private int id;
     private String nombre, apellidoPaterno, apellidoMaterno, contraseña, telefono;
     private String fechaNacimiento;
