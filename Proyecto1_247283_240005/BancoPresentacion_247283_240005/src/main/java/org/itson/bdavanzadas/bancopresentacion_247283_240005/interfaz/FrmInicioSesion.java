@@ -199,7 +199,6 @@ public class FrmInicioSesion extends javax.swing.JFrame {
 
         try {
             control.iniciarSesion(telefono, contraseña);
- 
         } catch (Exception e) {
         }
     }//GEN-LAST:event_bInicioSesionActionPerformed

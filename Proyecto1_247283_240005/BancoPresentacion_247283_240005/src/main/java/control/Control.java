@@ -191,7 +191,6 @@ public class Control {
                 clienteActivo = cliDAO.iniciarSesion(telefono, contraseña);
                 return cliDAO.iniciarSesion(telefono, contraseña);
             } else {
-
                 JOptionPane.showMessageDialog(null, "Inicio de sesión fallido. Verifica tus credenciales.");
             }
 
