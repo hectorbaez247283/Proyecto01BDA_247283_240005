@@ -29,6 +29,7 @@ import org.itson.bdavanzadas.bancodominio_247283_240005.Domicilio;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.Conexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.IConexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.daos.ClienteDAO;
+import org.itson.bdavanzadas.bancopersistencia_247283_240005.daos.CuentaDAO;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.dto.ClienteDTO;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.PersistenciaException;
 import org.itson.bdavanzadas.bancopresentacion_247283_240005.interfaz.FrmMenu;
@@ -49,6 +50,7 @@ public class Control {
     String cadenaConexion = "jdbc:mysql://localhost:3306/banco_247283_240005", usuario = "root", contra = "151204";
     IConexion c = new Conexion(cadenaConexion, usuario, contra);
     ClienteDAO cliDAO = new ClienteDAO(c);
+    CuentaDAO cDAO = new CuentaDAO(c);
 
     private static Cliente clienteActivo;
 
@@ -225,6 +227,58 @@ public class Control {
                         } else {
                             System.out.println("No se encontró información para la cuenta " + numeroCuentaSeleccionado);
                         }
+                    }
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                // Manejar la excepción según sea necesario
+            }
+        }
+    }
+
+    /**
+     * Agrega saldo a la cuenta de un cliente.
+     *
+     * @param numeroCuenta Número de cuenta asociado.
+     * @param monto Monto a añadir.
+     */
+    public void agregarSaldo(String numeroCuenta, String monto) {
+        // Obtiene el ID de la cuenta y el monto de saldo desde tus campos de texto u otros componentes
+        int cuentaNum = Integer.parseInt(numeroCuenta);
+        float montoSaldo = Float.parseFloat(monto);
+
+        try {
+            // Llama al método en tu DAO para agregar el saldo
+            cDAO.agregarSaldo(cuentaNum, montoSaldo);
+
+            // Muestra un mensaje de éxito o realiza otras acciones según sea necesario
+            JOptionPane.showMessageDialog(null, "Saldo agregado correctamente.");
+
+        } catch (PersistenciaException ex) {
+            // Maneja la excepción de persistencia (puedes mostrar un mensaje de error, por ejemplo)
+            JOptionPane.showMessageDialog(null, "Error al agregar saldo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Cancela la cuenta dada por el combobox dado en el parámetro.
+     * @param numCuenta Combobox donde se va a obtener la cuenta a cancelar.
+     */
+    public void cancelarCuenta(String numCuenta) {
+
+        // Verificar si el número de cuenta seleccionado no es nulo
+        if (numCuenta != null) {
+            // Realizar la actualización en la base de datos para cambiar el estado de la cuenta
+            try (Connection conexion = DriverManager.getConnection(cadenaConexion, usuario, contra)) {
+                String sql = "UPDATE Cuentas SET estado = 'cancelada' WHERE numeroCuenta = ?";
+                try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+                    statement.setString(1, numCuenta);
+                    int filasAfectadas = statement.executeUpdate();
+
+                    if (filasAfectadas > 0) {
+                        JOptionPane.showMessageDialog(null, "La cuenta " + numCuenta + " ha sido cancelada.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se pudo cancelar la cuenta " + numCuenta);
                     }
                 }
             } catch (SQLException ex) {

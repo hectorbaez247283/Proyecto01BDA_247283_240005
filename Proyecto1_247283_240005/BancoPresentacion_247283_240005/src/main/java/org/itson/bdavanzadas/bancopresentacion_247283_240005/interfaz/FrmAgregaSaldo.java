@@ -4,6 +4,7 @@
  */
 package org.itson.bdavanzadas.bancopresentacion_247283_240005.interfaz;
 
+import control.Control;
 import javax.swing.JOptionPane;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.Conexion;
 import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.IConexion;
@@ -19,7 +20,9 @@ public class FrmAgregaSaldo extends javax.swing.JFrame {
     String cadenaConexion = "jdbc:mysql://localhost:3306/banco_247283_240005", usuario = "root", contra = "Avenged21@";
     IConexion c = new Conexion(cadenaConexion, usuario, contra);
     CuentaDAO cDAO = new CuentaDAO(c);
-
+    Control control = new Control();
+    private String numeroCuenta;
+    
     /**
      * Creates new form FrmAgregaSaldo
      */
@@ -36,22 +39,16 @@ public class FrmAgregaSaldo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtnumeroCuenta = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtMonto = new javax.swing.JTextField();
         bAgregarSaldo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        txtnumeroCuenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtnumeroCuentaActionPerformed(evt);
-            }
-        });
+        jPanel1.setBackground(new java.awt.Color(177, 255, 227));
 
-        jLabel1.setText("Numero cuenta:");
-
+        jLabel2.setFont(new java.awt.Font("Malgun Gothic", 0, 18)); // NOI18N
         jLabel2.setText("Monto:");
 
         txtMonto.addActionListener(new java.awt.event.ActionListener() {
@@ -60,6 +57,7 @@ public class FrmAgregaSaldo extends javax.swing.JFrame {
             }
         });
 
+        bAgregarSaldo.setFont(new java.awt.Font("Malgun Gothic", 0, 18)); // NOI18N
         bAgregarSaldo.setText("Agregar saldo");
         bAgregarSaldo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,76 +65,67 @@ public class FrmAgregaSaldo extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(133, 133, 133)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bAgregarSaldo)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(175, 175, 175)
+                        .addComponent(jLabel2)))
+                .addContainerGap(134, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(105, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(bAgregarSaldo)
+                .addGap(77, 77, 77))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(169, 169, 169)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtnumeroCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(136, 136, 136)
-                        .addComponent(bAgregarSaldo)))
-                .addContainerGap(113, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtnumeroCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(51, 51, 51)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(bAgregarSaldo)
-                .addContainerGap(78, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Agrega saldo a una cuenta con los datos de los campos de texto.
+     * @param evt 
+     */
     private void bAgregarSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAgregarSaldoActionPerformed
         // TODO add your handling code here:
-        agregarSaldo();
+        control.agregarSaldo(numeroCuenta, txtMonto.getText());
     }//GEN-LAST:event_bAgregarSaldoActionPerformed
 
     private void txtMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMontoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMontoActionPerformed
 
-    private void txtnumeroCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnumeroCuentaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtnumeroCuentaActionPerformed
+    public String getNumeroCuenta() {
+        return numeroCuenta;
+    }
 
-    private void agregarSaldo() {
-        // Obtiene el ID de la cuenta y el monto de saldo desde tus campos de texto u otros componentes
-        int numeroCuenta = Integer.parseInt(txtnumeroCuenta.getText());
-        float montoSaldo = Float.parseFloat(txtMonto.getText());
-
-        try {
-            // Llama al método en tu DAO para agregar el saldo
-            cDAO.agregarSaldo(numeroCuenta, montoSaldo);
-
-            // Muestra un mensaje de éxito o realiza otras acciones según sea necesario
-            JOptionPane.showMessageDialog(this, "Saldo agregado correctamente.");
-
-        } catch (PersistenciaException ex) {
-            // Maneja la excepción de persistencia (puedes mostrar un mensaje de error, por ejemplo)
-            JOptionPane.showMessageDialog(this, "Error al agregar saldo: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+    public void setNumeroCuenta(String numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
     }
 
     /**
@@ -176,9 +165,8 @@ public class FrmAgregaSaldo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAgregarSaldo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtMonto;
-    private javax.swing.JTextField txtnumeroCuenta;
     // End of variables declaration//GEN-END:variables
 }
