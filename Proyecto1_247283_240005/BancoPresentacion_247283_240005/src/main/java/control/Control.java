@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -36,10 +37,19 @@ public class Control {
 
     private static final Logger LOG = Logger.getLogger(FrmRegistroCliente.class.getName());
 
+    /*
+    Atributos de clase.
+    */
     String cadenaConexion = "jdbc:mysql://localhost:3306/banco_247283_240005", usuario = "root", contra = "151204";
     IConexion c = new Conexion(cadenaConexion, usuario, contra);
     ClienteDAO cliDAO = new ClienteDAO(c);
 
+    /**
+     * Asigna una imagen a una etiqueta y la escala al tamaño asignado para la misma.
+     * @param frame Frame donde se encuentra el label.
+     * @param labelName Etiqueta sobre la que se va a trabajar.
+     * @param root Raíz donde se encuentra localizada la imagen.
+     */
     public static void setImageLabel(JFrame frame, JLabel labelName, String root) {
         ImageIcon img = new ImageIcon(root);
         Icon icon = new ImageIcon(img.getImage().getScaledInstance(labelName.getWidth(), labelName.getHeight(), Image.SCALE_DEFAULT));
@@ -47,6 +57,10 @@ public class Control {
         frame.repaint();
     }
 
+    /**
+     * Limita las opciones del campo de texto a solo teclear letras.
+     * @param e Evento de teclas necesario.
+     */
     public static void soloLetras(KeyEvent e) {
         char c = e.getKeyChar();
         // Solo permite la entrada de letras con acentos (áéíóúüÁÉÍÓÚÜ)
@@ -56,6 +70,10 @@ public class Control {
         }
     }
 
+    /**
+     * Limita las opciones del campo de texto a solo teclear números.
+     * @param e Evento de teclas necesario.
+     */
     public static void soloNumeros(KeyEvent e) {
         char c = e.getKeyChar();
         // Solo permite la entrada de números
@@ -66,6 +84,12 @@ public class Control {
         }
     }
 
+    /**
+     * Limita los caracteres máximos permitidos en un campo de texto.
+     * @param e Evento de teclas necesario.
+     * @param maxLength Longitud máxima del campo.
+     * @param txt Campo de texto a trabajar.
+     */
     public static void caracteresMaximos(KeyEvent e, int maxLength, JTextField txt) {
         char c = e.getKeyChar();
 
@@ -90,6 +114,15 @@ public class Control {
         return fechaFormateada;
     }
 
+    /**
+     * Designa las opciones para el combobox de las cuentas del cliente.
+     * @param combo ComboBox donde se desplegarán las opciones.
+     * @param cliente Cliente del cual se buscarán cuentas.
+     */
+    public void opcionesComboBox (JComboBox combo, Cliente cliente){
+        combo.setModel(new CuentasComboBoxModel(cliente));
+    }
+    
     public boolean registrarCliente(JFrame frame, String nombre, String apellidoPaterno,
             String apellidoMaterno, String fechaNacimiento, String contrasenia,
             String telefono, String calle, String colonia, String numExterior)

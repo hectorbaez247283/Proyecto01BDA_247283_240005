@@ -44,6 +44,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnRetirarSnCuenta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(239, 249, 251));
 
