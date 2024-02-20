@@ -13,7 +13,12 @@ import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaExcepti
  * @author Chris
  */
 public interface ICuenta {
+
+    public Cuenta agregarCuenta(CuentaDTO cuenta) throws PersistenciaException;
+
+    public void agregarSaldo(int numeroCuenta, float saldo) throws PersistenciaException;
     
-    public Cuenta agregarCuenta (CuentaDTO cuenta) throws PersistenciaException;
+    public float obtenSaldo (int numeroCuenta)throws PersistenciaException;
     
+
 }

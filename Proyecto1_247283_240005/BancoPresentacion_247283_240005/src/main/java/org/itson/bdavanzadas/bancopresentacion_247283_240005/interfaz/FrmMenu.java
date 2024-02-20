@@ -4,13 +4,22 @@
  */
 package org.itson.bdavanzadas.bancopresentacion_247283_240005.interfaz;
 
+import javax.swing.JOptionPane;
 import org.itson.bdavanzadas.bancodominio_247283_240005.Cliente;
+import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.Conexion;
+import org.itson.bdavanzadas.bancopersistencia_247283_240005.conexion.IConexion;
+import org.itson.bdavanzadas.bancopersistencia_247283_240005.daos.CuentaDAO;
+import org.itson.bdavanzadas.bancopersistencia_247283_240005.persistenciaException.PersistenciaException;
 
 /**
  *
  * @author Chris
  */
 public class FrmMenu extends javax.swing.JFrame {
+
+    String cadenaConexion = "jdbc:mysql://localhost:3306/banco_247283_240005", usuario = "root", contra = "Avenged21@";
+    IConexion c = new Conexion(cadenaConexion, usuario, contra);
+    CuentaDAO cDAO = new CuentaDAO(c);
 
     /**
      * Creates new form FrmMenu
@@ -31,6 +40,11 @@ public class FrmMenu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         bCuenta = new javax.swing.JButton();
+        bAgregaSaldo = new javax.swing.JButton();
+        bSaldo = new javax.swing.JButton();
+        txtNumeroCuenta = new javax.swing.JTextField();
+        saldoDisponibleLabel = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,6 +59,30 @@ public class FrmMenu extends javax.swing.JFrame {
             }
         });
 
+        bAgregaSaldo.setText("Agregar saldo");
+        bAgregaSaldo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAgregaSaldoActionPerformed(evt);
+            }
+        });
+
+        bSaldo.setText("Ver saldo");
+        bSaldo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSaldoActionPerformed(evt);
+            }
+        });
+
+        txtNumeroCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumeroCuentaActionPerformed(evt);
+            }
+        });
+
+        saldoDisponibleLabel.setText("$0.0");
+
+        jLabel3.setText("Numero de cuenta: ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -52,16 +90,30 @@ public class FrmMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(254, 254, 254)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addComponent(jLabel1))))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(139, 139, 139)
-                        .addComponent(bCuenta)))
-                .addContainerGap(275, Short.MAX_VALUE))
+                        .addComponent(bCuenta))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(212, 212, 212)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(26, 26, 26)
+                                    .addComponent(jLabel1))
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(42, 42, 42)
+                                    .addComponent(bSaldo))
+                                .addComponent(txtNumeroCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(saldoDisponibleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)))
+                        .addGap(18, 18, 18)
+                        .addComponent(bAgregaSaldo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(237, 237, 237)
+                        .addComponent(jLabel3)))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -70,7 +122,17 @@ public class FrmMenu extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(83, 83, 83)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 245, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bAgregaSaldo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(saldoDisponibleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(42, 42, 42)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtNumeroCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(bSaldo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addComponent(bCuenta)
                 .addGap(98, 98, 98))
         );
@@ -84,6 +146,37 @@ public class FrmMenu extends javax.swing.JFrame {
         f.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_bCuentaActionPerformed
+
+    public void actualizarSaldoPorNumeroCuenta(int numeroCuenta) {
+        try {
+
+            float saldoDisponible = cDAO.obtenSaldo(numeroCuenta);
+
+            saldoDisponibleLabel.setText("$" + saldoDisponible);
+
+        } catch (PersistenciaException ex) {
+
+            JOptionPane.showMessageDialog(this, "Error al obtener el saldo por número de cuenta: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void bAgregaSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAgregaSaldoActionPerformed
+        // TODO add your handling code here:
+        FrmAgregaSaldo f = new FrmAgregaSaldo();
+        f.setVisible(true);
+    }//GEN-LAST:event_bAgregaSaldoActionPerformed
+
+    private void bSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaldoActionPerformed
+        // TODO add your handling code here:
+
+        int numeroCuenta = Integer.parseInt(txtNumeroCuenta.getText());
+
+        actualizarSaldoPorNumeroCuenta(numeroCuenta);
+    }//GEN-LAST:event_bSaldoActionPerformed
+
+    private void txtNumeroCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroCuentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumeroCuentaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -121,8 +214,13 @@ public class FrmMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bAgregaSaldo;
     private javax.swing.JButton bCuenta;
+    private javax.swing.JButton bSaldo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel saldoDisponibleLabel;
+    private javax.swing.JTextField txtNumeroCuenta;
     // End of variables declaration//GEN-END:variables
 }

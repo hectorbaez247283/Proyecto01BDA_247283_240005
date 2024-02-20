@@ -71,11 +71,50 @@ public class CuentaDAO implements ICuenta {
         }
     }
 
-// Método para generar un número de cuenta aleatorio (puedes ajustar la lógica según tus necesidades)
+    @Override
+    public void agregarSaldo(int numeroCuenta, float saldo) throws PersistenciaException {
+        String sql = "UPDATE Cuentas SET saldoPesosMx = saldoPesosMx + ? WHERE numeroCuenta = ?";
+
+        try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQL = conexion.prepareStatement(sql)) {
+
+            comandoSQL.setFloat(1, saldo);
+            comandoSQL.setInt(2, numeroCuenta);
+
+            int resultado = comandoSQL.executeUpdate();
+
+            if (resultado != 1) {
+                throw new PersistenciaException("No se pudo agregar saldo a la cuenta.");
+            }
+
+        } catch (SQLException e) {
+            throw new PersistenciaException("Error al intentar agregar saldo a la cuenta", e);
+        }
+    }
+
+    @Override
+    public float obtenSaldo(int numeroCuenta) throws PersistenciaException {
+        String sentenciaSQL = "SELECT saldoPesosMx FROM Cuentas WHERE numeroCuenta = ?";
+
+        try ( Connection conexion = this.conexion.crearConexion();  PreparedStatement comandoSQL = conexion.prepareStatement(sentenciaSQL)) {
+
+            comandoSQL.setInt(1, numeroCuenta);
+
+            try ( ResultSet resultado = comandoSQL.executeQuery()) {
+                if (resultado.next()) {
+                    return resultado.getFloat("saldoPesosMx");
+                } else {
+                    throw new PersistenciaException("No se encontró la cuenta con el número especificado.");
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new PersistenciaException("Error al obtener el saldo por número de cuenta", e);
+        }
+    }
+
     private int generarNumeroCuentaAleatorio() {
-        // Aquí puedes implementar la lógica para generar un número de cuenta aleatorio
-        // Puedes utilizar, por ejemplo, la clase Random o cualquier otra lógica que prefieras
-        return 100000 + new Random().nextInt(900000); // Ejemplo: Números de cuenta de 6 dígitos
+
+        return 100000 + new Random().nextInt(900000);
     }
 
 }
