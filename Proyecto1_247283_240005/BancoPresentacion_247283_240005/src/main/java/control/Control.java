@@ -182,24 +182,24 @@ public class Control {
         return false;
     }
 
-    public void iniciarSesion(String telefono, String contraseña) {
-        try {
-            cliDAO.iniciarSesion(telefono, contraseña);
-
-            if (cliDAO.isInicioSesionExitoso()) {
-                JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
-                cliDAO.iniciarSesion(telefono, contraseña);
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Inicio de sesión fallido. Verifica tus credenciales.");
-            }
-
-        } catch (PersistenciaException e) {
-            JOptionPane.showMessageDialog(null, "Error al intentar iniciar sesión: " + e.getMessage());
-        }
-
-    }
-
+//    public Cliente iniciarSesion(String telefono, String contraseña) {
+//        try {
+//            cliDAO.iniciarSesion(telefono, contraseña);
+//
+//            if (cliDAO.isInicioSesionExitoso()) {
+//                JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
+//                clienteActivo = cliDAO.iniciarSesion(telefono, contraseña);
+//                return cliDAO.iniciarSesion(telefono, contraseña);
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Inicio de sesión fallido. Verifica tus credenciales.");
+//            }
+//
+//        } catch (PersistenciaException e) {
+//            JOptionPane.showMessageDialog(null, "Error al intentar iniciar sesión: " + e.getMessage());
+//        }
+//        return null;
+//    }
+    
     /**
      * Muestra el saldo de la cuenta seleccionada en el combobox utilizando el
      * método setText de la etiqueta dada en el parámetro.
