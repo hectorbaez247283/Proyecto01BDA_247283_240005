@@ -274,6 +274,7 @@ public class FrmActualizaCliente extends javax.swing.JFrame {
             cliDAO.actualizaCliente(cliente);
 
             JOptionPane.showMessageDialog(this, "Cliente actualizado exitosamente");
+            this.dispose();
 
         } catch (PersistenciaException | NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Error al intentar actualizar el cliente: " + e.getMessage());

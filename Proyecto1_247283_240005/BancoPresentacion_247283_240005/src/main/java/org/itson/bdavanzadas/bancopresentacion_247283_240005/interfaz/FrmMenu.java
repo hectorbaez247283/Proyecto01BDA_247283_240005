@@ -82,6 +82,7 @@ public class FrmMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         FrmCuenta f = new FrmCuenta();
         f.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_bCuentaActionPerformed
 
     /**

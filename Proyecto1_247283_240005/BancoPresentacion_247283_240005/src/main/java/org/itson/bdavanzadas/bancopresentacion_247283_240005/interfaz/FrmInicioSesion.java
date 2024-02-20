@@ -124,14 +124,15 @@ public class FrmInicioSesion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");
                 FrmMenu f = new FrmMenu();
                 f.setVisible(true);
-                
+                this.dispose();
+
             } else {
-                
+
                 JOptionPane.showMessageDialog(this, "Inicio de sesión fallido. Verifica tus credenciales.");
             }
 
         } catch (PersistenciaException e) {
-            
+
             JOptionPane.showMessageDialog(this, "Error al intentar iniciar sesión: " + e.getMessage());
         }
 
